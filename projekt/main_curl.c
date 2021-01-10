@@ -8,17 +8,6 @@ typedef struct _Dane{
     int x[3];
     int y[3];
     char* field[3];
-    
-    // int xChild1;
-    // int yChild1;
-    // char* fieldChild1;
-    // int xChild2;
-    // int yChild2;
-    // char* fieldChild2;
-    // int xChild3;
-    // int yChild3;
-    // char* fieldChild3;
-
 }Dane;
 
 typedef struct _Macierz {
@@ -80,7 +69,7 @@ void zapisz_macierz(char nazwa[], Macierz *m) {
     fprintf(fout, "%d\n%d\n", m->r, m->c);
     for (i = 0; i < m->r; i++)
         for (j=0; j < m->c; j++) 
-            fprintf(fout, "%d\n", m->tab[i][j]);//dla wiekszej dokladnosci po przecinku usunac .1!
+            fprintf(fout, "%d\n", m->tab[i][j]);
 
     fclose(fout);
 }
@@ -120,32 +109,6 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
 
     return realsize;
 }
-// void interpret_explore(const char* const chunk)
-// {
-//     printf("json::: %s",chunk);
-//     Dane *dane=malloc(sizeof(Dane*));
-//     const cJSON *payload = NULL;
-//     printf("zainicjowalem payload\n");
-//     cJSON *game_json = cJSON_Parse(chunk);
-//     printf("parse\n");
-//     if (game_json == NULL)
-//     {
-//         printf("game NULL");
-//         const char *error_ptr = cJSON_GetErrorPtr();
-//         if (error_ptr != NULL)
-//         {
-//             fprintf(stderr, "Error before: %s\n", error_ptr);
-//         }
-//     }
-//     else
-//     {
-//         printf("wchodze w else");
-//         payload = cJSON_GetObjectItemCaseSensitive(game_json, "payload");
-
-//         printf("lista");
-       
-//     }
-// }
 Dane* interpret_response(const char* const chunk,Dane *dane)
 {
     // printf("json::: %s",chunk);
@@ -164,45 +127,24 @@ Dane* interpret_response(const char* const chunk,Dane *dane)
         }
     }
     else {
-        // printf("wchodze w else\n");
-        // status = cJSON_GetObjectItemCaseSensitive(game_json, "status");
         payload = cJSON_GetObjectItemCaseSensitive(game_json, "payload");
-        // printf("wczytalem payload\n");
         cJSON *current_x = cJSON_GetObjectItemCaseSensitive(payload, "current_x");
         cJSON *list =  cJSON_GetObjectItemCaseSensitive(payload, "list");
-        // printf("szukam current x i list\n");
         if(list!=NULL)
         {
             
-                // printf("list: %s\n", cJSON_PrintUnformatted(list));
-                // printf("wszedlem do if\n");
-                // cJSON *obj = list;
                 cJSON *object = NULL;
                 int i=0;
                 // printf("inicjuje obiekt\n");
                 cJSON_ArrayForEach(object,list)
                 {
-                    // printf("iterated object in list: %s\n", cJSON_PrintUnformatted(object));
-                    // printf("wchodze do array\n");
                     cJSON *x = cJSON_GetObjectItemCaseSensitive(object, "x");
                     cJSON *y = cJSON_GetObjectItemCaseSensitive(object, "y");
                     cJSON *type = cJSON_GetObjectItemCaseSensitive(object, "type");
-
-                    // printf("print json\n");
-                
-                // printf("Payload:current_x: %d\n",x->valueint);// wyrzuce segmetation fault, why not?
-                // printf("Payload:current_y: %d\n",y->valueint);
-                // printf("Payload:field_type: %s\n",type->valuestring);
-                // printf("wczytalem zmienne\n");
                     dane->x[i]=x->valueint;
-                    // printf("przypisuje"); 
                     dane->y[i]=y->valueint;
                     dane->field[i] =(char*)malloc(sizeof(char)*strlen((type->valuestring)+1));
                     strcpy(dane->field[i], type->valuestring);
-                    
-                    // printf("List:current_x: %d\n",dane->x[i]);
-                    // printf("List:current_y: %d\n",dane->y[i]);
-                    // printf("List:field_type: %s\n",dane->field[i]);
                     i++;
                 }
         }           
@@ -210,9 +152,6 @@ Dane* interpret_response(const char* const chunk,Dane *dane)
         else if (current_x != NULL) {
             cJSON *current_y = cJSON_GetObjectItemCaseSensitive(payload, "current_y");
             cJSON *field_type =  cJSON_GetObjectItemCaseSensitive(payload, "field_type");
-            // printf("Payload:current_x: %d\n",current_x->valueint);
-            // printf("Payload:current_y: %d\n",current_y->valueint);
-            // printf("Payload:field_type: %s\n",field_type->valuestring);
             dane->x[0]=current_x->valueint;
             dane->y[0]=current_y->valueint;
             dane->field[0] =field_type->valuestring;
@@ -372,14 +311,6 @@ Macierz *wyczysc_macierz(Macierz *m)
     {
         m->tab[i][j] = 0; 
     }
-    // int a;
-    // if(strcmp(dane->field[0],"grass")==0)
-    // a=2;
-    // else if(strcmp(dane->field[0],"sand")==0)
-    // a=3;
-    // else if(strcmp(dane->field[0],"wall")==0)
-    // a=1;
-    //     m->tab[dane->x[0]][dane->y[0]] = a;
     
     return m;
 }
