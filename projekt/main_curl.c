@@ -345,7 +345,7 @@ int main(int argc, char **argv)
     if (argc==1)
     {
         printf("podaj operacje!\n");
-        printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"E\"\n");
+        printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"E\"; Reset - \"reset\";\n");
     }
     else
     for (int i=1;i<argc;i++)
@@ -358,13 +358,9 @@ int main(int argc, char **argv)
         }
         else if(strcmp(argv[i],"Rr")==0)
         {
-            // printf("wszedlem rr");
             chunk = rotate(swiat,"right");
-            // printf("cokolwiek");
-            // printf("chunk : %s\n",chunk);
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
-            // printf("gotowe");
         }
         else if(strcmp(argv[i],"Rl")==0)
         {
@@ -394,7 +390,7 @@ int main(int argc, char **argv)
         else
         {
         printf("podaj operacje!\n");
-        printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"explore\"\n");
+        printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"E\"; Reset - \"reset\";\n");
         }
         wypisz(a);
         zapisz_macierz(nazwa_folderu,a);   
