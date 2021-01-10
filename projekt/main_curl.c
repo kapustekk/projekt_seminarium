@@ -4,6 +4,7 @@
 #include <curl/curl.h>
 #include "../cJSON/cJSON.h"
 
+#define A 1024
 typedef struct _Dane{
     int x[3];
     int y[3];
@@ -205,9 +206,9 @@ char * make_request(char *url)
 }
 char* info(char *token) {
     
-    char*chunk= (char*)malloc(sizeof(char)*1024);
+    char*chunk= (char*)malloc(sizeof(char)*A);
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/info/token
-    char *url = (char*)malloc(sizeof(char)*1024);
+    char *url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/info");
     strcat(url,"/");
     strcat(url,token);
@@ -217,10 +218,10 @@ char* info(char *token) {
 }
 
 char* explore(char *token) {
-    char*chunk= (char*)malloc(sizeof(char)*1024);
+    char*chunk= (char*)malloc(sizeof(char)*A);
     
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/token
-    char *url = (char*)malloc(sizeof(char)*1024);
+    char *url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore");
     strcat(url,"/");
     strcat(url,token);
@@ -231,9 +232,9 @@ char* explore(char *token) {
 
 char* reset(char *token) {
     
-    char*chunk= (char*)malloc(sizeof(char)*1024);
+    char*chunk= (char*)malloc(sizeof(char)*A);
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/token
-    char *url = (char*)malloc(sizeof(char)*1024);
+    char *url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/reset");
     strcat(url,"/");
     strcat(url,token);
@@ -244,9 +245,9 @@ char* reset(char *token) {
 
 
 char* move(char *token) {
-    char*chunk= (char*)malloc(sizeof(char)*1024);
+    char*chunk= (char*)malloc(sizeof(char)*A);
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/move/token
-    char *url = (char*)malloc(sizeof(char)*1024);
+    char *url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/move");
     strcat(url,"/");
     strcat(url,token);
@@ -257,9 +258,9 @@ char* move(char *token) {
 
 char* rotate(char *token, char *direction)
 {
-    char*chunk= (char*)malloc(sizeof(char)*1024);
+    char*chunk= (char*)malloc(sizeof(char)*A);
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/rotate/token/direction
-    char*url = (char*)malloc(sizeof(char)*1024);
+    char*url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/rotate");
     strcat(url,"/");
     strcat(url,token);
@@ -317,6 +318,8 @@ Macierz *wyczysc_macierz(Macierz *m)
 
 int main(int argc, char **argv)
 {
+    char *swiat="qwerty_12";
+    // strcpy(swiat,"qwerty_12");
     Dane *dane=malloc(sizeof(Dane));
     char* nazwa_folderu="A.txt";
     char*chunk=(char*)malloc(sizeof(char*));
@@ -339,8 +342,6 @@ int main(int argc, char **argv)
     // 1 2 2 2 2 1 2 2 1
     // 1 1 1 1 1 1 1 1 1
 
-    char *swiat=(char*)malloc(sizeof(char*));
-    strcpy(swiat,"qwerty_12");
     // char *url;
     if (argc==1)
     {
