@@ -11,6 +11,12 @@ typedef struct _Dane{
     char* field[3];
 }Dane;
 
+typedef struct _Memory
+{
+    char *response;
+    size_t size;
+} Memory;
+
 Dane* interpret_response(const char* const chunk,Dane *dane);
 
 #endif
