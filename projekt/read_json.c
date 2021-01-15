@@ -1,5 +1,4 @@
 #include "read_json.h"
-#include"mapa.h"
 
 Dane* interpret_response(const char* const chunk, Dane *dane)
 {
