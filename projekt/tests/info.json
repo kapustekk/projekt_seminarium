@@ -1,0 +1,13 @@
+{
+    "status": "Success",
+    "payload": {
+      "name": "First world 12",
+      "current_x": 1,
+      "current_y": 1,
+      "current_session": "e33c6004-4736-436c-a30e-61709fe046af",
+      "direction": "E",
+      "step": 4,
+      "field_type": "grass",
+      "field_bonus": ""
+    }
+}
