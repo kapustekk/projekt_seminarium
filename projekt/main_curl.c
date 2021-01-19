@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     char*chunk=(char*)malloc(sizeof(char*));
     // Dane *dane=(Dane*)malloc(sizeof(Dane*));
     FILE *fin=fopen(nazwa_folderu,"r");
-    Macierz *a;
+    mapa *a;
     a=wczytaj(fin);
     //0-unknown field ; 1 - WALL; 2-GRASS; 3-SAND;
     //KONCOWA MACIERZ
