@@ -1,3 +1,6 @@
+#ifndef _WPISANIE_H
+#define _WPISANIE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,3 +25,11 @@ typedef struct _Mapa
     int pozycja_y;
     char kierunek;
 } mapa;
+
+mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2]);
+mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, int wektor[1][2]);
+void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, int gdzie_zaczynamy);
+void zero(int x, int y, mapa *source);
+mapa *pamiec(int rozmiar_x, int rozmiar_y);
+
+#endif
