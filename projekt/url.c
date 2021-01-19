@@ -1,5 +1,6 @@
-#include"logic.h"
+#include"url.h"
 #define A 1024
+
 char* info(char *token) {
     
     char*chunk= (char*)malloc(sizeof(char)*A);
@@ -15,7 +16,6 @@ char* info(char *token) {
 
 char* explore(char *token) {
     char*chunk= (char*)malloc(sizeof(char)*A);
-    
     // http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore/token
     char *url = (char*)malloc(sizeof(char)*A);
     strcpy(url,"http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/explore");

@@ -9,6 +9,7 @@ typedef struct _Dane{
     int x[3];
     int y[3];
     char* field[3];
+    char* direction;
 }Dane;
 
 typedef struct _Memory

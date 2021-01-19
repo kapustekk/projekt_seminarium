@@ -5,7 +5,7 @@
 #include "mapa.h"
 #include "read_json.h"
 #include "connect.h"
-#include"logic.h"
+#include "url.h"
 
 
 
@@ -67,12 +67,13 @@ int main(int argc, char **argv)
             chunk = info(swiat);
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
+            printf("%s",chunk);
         }
         else if(strcmp(argv[i], "E")==0)
         {
             chunk = explore(swiat);
             dane = interpret_response(chunk,dane);
-            printf("%d, %d, %s",dane->x[0],dane->y[0],dane->field[0]);
+            // printf("%d, %d, %s",dane->x[0],dane->y[0],dane->field[0]);
             a=uzupelnij_macierz(a,dane);
         }
         else if(strcmp(argv[i], "reset")==0)
