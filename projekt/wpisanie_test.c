@@ -33,4 +33,8 @@ int main()
         printf("\n");
     }
     printf("%d %d\n", wektor[0], wektor[1]);
+    printf("%d %d \n", start->rozmiar_y, start->rozmiar_x);
+    zwolnij_mape(start);
+    //free(start);
+    //int *ptr = malloc(sizeof(int) * 15);
 }

@@ -8,39 +8,48 @@ void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, in
 
 mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, int wektor[1][2])
 {
+    mapa *wyjscie;
     if (x + wektor[0][1] < wejscie->rozmiar_x && y + wektor[0][0] < wejscie->rozmiar_y && x + wektor[0][0] >= 0 && y + wektor[0][1] >= 0)
     {
-        wejscie->mapa[x + wektor[0][0]][y + wektor[0][1]] = pole;
+        wyjscie = wejscie;
+        wyjscie->mapa[x + wektor[0][0]][y + wektor[0][1]] = pole;
         //wektor[0][0] = 1;
     }
     else
     {
-
         if (x + wektor[0][1] >= wejscie->rozmiar_x)
         {
-            wejscie = doklejanie(wejscie, 'p', &wektor[0]);
+            wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
+            doklejanie(wejscie, 'p', &wektor[0], wyjscie);
             //printf("%d %d \n", y + wektor[0][0], x + wektor[0][1]);
-            wejscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            wyjscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            zwolnij_mape(wejscie);
         }
         else if (y + wektor[0][0] >= wejscie->rozmiar_y)
         {
+            wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
             //(" xd %d %d \n", y + wektor[0][0], x + wektor[0][1]);
-            wejscie = doklejanie(wejscie, 'd', wektor);
+            doklejanie(wejscie, 'd', wektor, wyjscie);
             //printf("%d %d \n", y + wektor[0][0], x + wektor[0][1]);
-            wejscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            wyjscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            zwolnij_mape(wejscie);
         }
         else if (x + wektor[0][1] < 0)
         {
-            wejscie = doklejanie(wejscie, 'l', wektor);
-            wejscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
+            doklejanie(wejscie, 'l', wektor, wyjscie);
+            wyjscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            zwolnij_mape(wejscie);
         }
         else if (y + wektor[0][0] < 0)
         {
-            wejscie = doklejanie(wejscie, 'g', &wektor[0]);
-            wejscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
+            doklejanie(wejscie, 'g', &wektor[0], wyjscie);
+            wyjscie->mapa[y + wektor[0][0]][x + wektor[0][1]] = pole;
+            zwolnij_mape(wejscie);
         }
     }
-    return wejscie;
+    return wyjscie;
 }
 
 void zero(int y, int x, mapa *source)
@@ -54,12 +63,12 @@ void zero(int y, int x, mapa *source)
     }
 }
 
-mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2])
+void doklejanie(mapa *wejscie, char kierunek, int wektor[1][2], mapa *wyjscie)
 {
-    mapa *wyjscie;
+    //mapa *wyjscie;
     if (kierunek == 'l')
     {
-        wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
+        //wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
         zero(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x, wyjscie);
         for (int i = 0; i < wejscie->rozmiar_y; i++)
         {
@@ -77,7 +86,7 @@ mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2])
     }
     else if (kierunek == 'p')
     {
-        wyjscie = pamiec(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x);
+        //wyjscie = pamiec(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x);
         printf("costam2\n");
         zero(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x, wyjscie);
         printf("costam2.5\n");
@@ -99,7 +108,7 @@ mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2])
     }
     else if (kierunek == 'g')
     {
-        wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
+        // wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
         zero(wejscie->rozmiar_y * 2, wejscie->rozmiar_x, wyjscie);
         for (int i = 0; i < wejscie->rozmiar_y; i++)
         {
@@ -118,7 +127,7 @@ mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2])
     else if (kierunek == 'd')
     {
         printf("costam1\n");
-        wyjscie = pamiec(2 * wejscie->rozmiar_y, wejscie->rozmiar_x);
+        // wyjscie = pamiec(2 * wejscie->rozmiar_y, wejscie->rozmiar_x);
         printf("costam2\n");
         zero(2 * wejscie->rozmiar_y, wejscie->rozmiar_x, wyjscie);
         printf("costam3\n");
@@ -138,16 +147,18 @@ mapa *doklejanie(mapa *wejscie, char kierunek, int wektor[1][2])
     }
     printf("costam6\n");
     printf("%d %d \n", wektor[0][0], wektor[0][1]);
-    return wyjscie;
+    //zwolnij_mape(wejscie);
+    //return wyjscie;
 }
 
 mapa *pamiec(int rozmiar_y, int rozmiar_x)
 {
     mapa *cos = malloc(sizeof(mapa *));
     cos->mapa = malloc(sizeof(char *) * rozmiar_y);
-    for (int i = 0; i < rozmiar_x; i++)
+    for (int i = 0; i < rozmiar_y; i++)
     {
-        cos->mapa[i] = malloc(sizeof(char));
+
+        cos->mapa[i] = malloc(sizeof(char) * rozmiar_x);
     }
     cos->rozmiar_x = 0;
     cos->rozmiar_y = 0;
@@ -155,4 +166,22 @@ mapa *pamiec(int rozmiar_y, int rozmiar_x)
     cos->pozycja_y = 0;
     cos->kierunek = '0';
     return cos;
+}
+
+mapa *doloz_pamiec(mapa *gdzie, char kierunek)
+{
+    if (kierunek == 'l' || kierunek == 'p')
+    {
+    }
+}
+
+void zwolnij_mape(mapa *co)
+{
+    for (int i = 0; i < co->rozmiar_y; i++)
+    {
+
+        free(co->mapa[i]);
+    }
+    free(co->mapa);
+    free(co);
 }
