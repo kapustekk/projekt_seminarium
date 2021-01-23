@@ -68,7 +68,7 @@ char * make_request(char *url)
         /* zawsze po sobie sprzątaj */
         // interpret_response(chunk.response);
         // free(chunk.response);
-        // curl_easy_cleanup(curl);
+        curl_easy_cleanup(curl);
     }
     return chunk.response;
 }
