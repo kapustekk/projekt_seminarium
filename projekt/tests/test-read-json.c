@@ -46,6 +46,7 @@ int main(int argc, char **argv)
     fread(explore_json,1,1023,fin2);
     fread(info_json,1,1023,fin1);
     fclose(fin2);
+    fclose(fin1);
 
     printf("reading json:\n%s\n",info_json);
     dane = interpret_response(info_json,dane);
@@ -54,7 +55,7 @@ int main(int argc, char **argv)
     else if(check_info(dane)==1)
     printf("FAILED! messgae 1 - info is not correct!\n");
     printf_data_info(dane);
-
+    
     printf("----------------\n");
     printf("reading json:\n%s\n",explore_json);
     dane = interpret_response(explore_json,dane);

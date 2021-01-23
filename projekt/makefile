@@ -8,10 +8,13 @@ connect:
 	cc connect.c tests/test-connect.c -lcurl -o test-connect
 
 test-read: read
+	valgrind ./test-read
 	./test-read
 test-url: url
+	valgrind ./test-url
 	./test-url
 test-connect: connect
+	valgrind ./test-url
 	./test-connect
 
 do_mapy_test: do_mapy_test

@@ -26,6 +26,12 @@ int main(int argc, char* argv[])
     {
         printf("Failed!\n");
     }
+    free(_info);
+    free(_reset);
+    free(_move);
+    free(_explore);
+    free(_rotater);
+    free(_rotatel);
 
 return 0;
 
