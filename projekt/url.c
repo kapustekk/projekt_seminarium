@@ -1,5 +1,5 @@
 #include"url.h"
-#define A 1024
+#define A 255
 
 char* info(char *token) {
     
