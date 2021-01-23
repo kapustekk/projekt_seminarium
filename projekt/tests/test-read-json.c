@@ -66,4 +66,5 @@ int main(int argc, char **argv)
     printf_data_explore(dane);
 
     free(dane);
+    free(explore_json);
 }
