@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include <cjson/cJSON.h>
+#include "../cJSON/cjson.h"
 
 #define A 1024
 
