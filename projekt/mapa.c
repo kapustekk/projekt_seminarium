@@ -25,7 +25,7 @@ void wypisz(mapa *m) {
     }
     printf("\n       ");
     for(int x=0; x<m->rozmiar_y; x++)
-    printf("---");
+    printf("--");
     printf("\n");
     for (c = m->rozmiar_y-1; c >= 0 ; c--) {
     printf("%3d | [ ",c);
