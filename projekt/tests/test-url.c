@@ -15,6 +15,6 @@ main()
     printf("reset:%s\n",_reset);
     printf("move:%s\n",_move);
     printf("explore:%s\n",_explore);
-    printf("rotater:%s\n",_rotater);
-    printf("rotatel:%s\n",_rotatel);
+    printf("rotate right:%s\n",_rotater);
+    printf("rotate left:%s\n",_rotatel);
 }
