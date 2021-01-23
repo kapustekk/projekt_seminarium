@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../connect.h"
-#include "../url.h"
 int main(int argc, char* argv[])
 {
     char* _info="http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/info/qwerty_12";
@@ -23,7 +22,7 @@ int main(int argc, char* argv[])
     printf("Success!\n");
     else
     {
-        printf("failed!\n");
+        printf("Failed!\n");
     }
     
 }

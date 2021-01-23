@@ -3,9 +3,9 @@ all:
 read:
 	cc tests/test-read-json.c read_json.c ../cJSON/cjson.o -o test-read
 url:
-	cc connect.c url.c tests/test-url.c -lcurl -o test-url
+	cc url.c tests/test-url.c -o test-url
 connect:
-	cc connect.c url.c tests/test-connect.c -lcurl -o test-connect
+	cc connect.c tests/test-connect.c -lcurl -o test-connect
 
 test-read: read
 	./test-read

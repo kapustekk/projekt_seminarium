@@ -46,39 +46,39 @@ int main(int argc, char **argv)
     {
         if(strcmp(argv[i],"M")==0)
         {
-            chunk = move(swiat);
+            chunk = make_request(move(swiat));
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
         }
         else if(strcmp(argv[i],"Rr")==0)
         {
-            chunk = rotate(swiat,"right");
+            chunk = make_request(rotate(swiat,"right"));
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
         }
         else if(strcmp(argv[i],"Rl")==0)
         {
-            chunk = rotate(swiat,"left");
+            chunk = make_request(rotate(swiat,"left"));
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
         }
         else if(strcmp(argv[i],"info")==0)
         {
-            chunk = info(swiat);
+            chunk = make_request(info(swiat));
             dane = interpret_response(chunk,dane);
             a=uzupelnij_macierz(a,dane);
             printf("%s",chunk);
         }
         else if(strcmp(argv[i], "E")==0)
         {
-            chunk = explore(swiat);
+            chunk = make_request(explore(swiat));
             dane = interpret_response(chunk,dane);
             // printf("%d, %d, %s",dane->x[0],dane->y[0],dane->field[0]);
             a=uzupelnij_macierz(a,dane);
         }
         else if(strcmp(argv[i], "reset")==0)
         {
-            chunk = reset(swiat);
+            chunk = make_request(reset(swiat));
             dane = interpret_response(chunk,dane);
             a = wyczysc_macierz(a);
             a=uzupelnij_macierz(a,dane);
