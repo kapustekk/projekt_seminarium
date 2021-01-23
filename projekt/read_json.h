@@ -4,13 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../cJSON/cJSON.h"
-
-typedef struct _Dane{
-    int x[3];
-    int y[3];
-    char* field[3];
-    char* direction;
-}Dane;
+#include "wpisanie.h"
 
 typedef struct _Memory
 {
@@ -18,6 +12,6 @@ typedef struct _Memory
     size_t size;
 } Memory;
 
-Dane* interpret_response(const char* const chunk,Dane *dane);
+Dane *interpret_response(const char *const chunk, Dane *dane);
 
 #endif

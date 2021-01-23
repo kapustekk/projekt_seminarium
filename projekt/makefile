@@ -1,5 +1,5 @@
 all:
-	cc main_curl.c mapa.c read_json.c url.c connect.c -lcurl ../cJSON/cjson.o
+	cc main_curl.c mapa.c read_json.c url.c connect.c wpisanie_do_mapy.c -lcurl ../cJSON/cjson.o
 read:
 	cc tests/test-read-json.c read_json.c ../cJSON/cjson.o -o test-read
 url:
@@ -21,3 +21,7 @@ do_mapy_test: do_mapy_test
 	gcc wpisanie_test.c wpisanie_do_mapy.c -o do_mapy_test
 	valgrind ./do_mapy_test
 	./do_mapy_test 
+clean:
+	rm -f do_mapy_test
+	rm -f *.o
+

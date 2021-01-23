@@ -2,6 +2,7 @@
 
 char *wykonaj_ruch(mapa *stan_mapy, int *bilans_rotacji, int *poczatek_sciany)
 {
+    
     //w prawo +1 w lewo -1
     if (bilans_rotacji[0] == 4 && stan_mapy->pozycja_y == poczatek_sciany[0] && stan_mapy->pozycja_x == poczatek_sciany[1])
     {
