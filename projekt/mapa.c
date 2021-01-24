@@ -138,8 +138,8 @@ mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
 
 mapa *wyczysc_macierz(mapa *m)
 {
-    for (int i = 0; i < m->rozmiar_x; i++)
-        for (int j = 0; j < m->rozmiar_y; j++)
+    for (int i = 0; i < m->rozmiar_y; i++)
+        for (int j = 0; j < m->rozmiar_x; j++)
         {
             m->mapa[i][j] = '_';
         }
