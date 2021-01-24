@@ -111,6 +111,7 @@ int main(int argc, char **argv)
             zapisz_macierz(nazwa_folderu, a, wektor);
         }
     }
+    printf("pole 12 2 %c\n", a->mapa[12][2]);
     //a = wyczysc_macierz(a);
     // a->mapa[3][3] = 'f';
     //zapisz_macierz("A.txt", a);

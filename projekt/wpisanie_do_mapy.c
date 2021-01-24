@@ -189,7 +189,7 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
     }
     printf(" rozmiar wyjsciowy %d %d \n wyjsciowa macierz\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x);
     wypiszx(wyjscie);
-    //zwolnij_mape(wejscie);
+    zwolnij_mape(wejscie);
     return wyjscie;
 }
 
