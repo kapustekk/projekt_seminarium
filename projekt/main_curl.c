@@ -94,6 +94,10 @@ int main(int argc, char **argv)
                 // printf("cso tu %d %d\n", wektor->y, wektor->x);
                 a = uzupelnij_macierz(a, dane, wektor);
             }
+            else if(strcmp(argv[i], "odkryj")==0)
+            {
+                odkryj_mape( a, swiat,dane,chunk,nazwa_folderu);
+            }
             else
             {
                 printf("podaj operacje!\n");
