@@ -16,10 +16,10 @@ int main(int argc, char **argv)
     char *nazwa_folderu = "A.txt";
     char *chunk = (char *)malloc(sizeof(char *));
     // Dane *dane=(Dane*)malloc(sizeof(Dane*));
-    FILE *fin = fopen(nazwa_folderu, "r");
+    //FILE *fin = fopen(nazwa_folderu, "r");
     //mapa *a = wczytaj(fin);
     wektor *wektor = malloc(sizeof(wektor));
-    mapa *a = wczytaj(fin, wektor);
+    mapa *a = wczytaj(nazwa_folderu, wektor);
     //wektor->y = 0;
     //wektor->x = 0;
     //printf("inicjaliznazja (info request) stworzenie wektora wpisanie obecnej pozycji\n");
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
             }
             else if (strcmp(argv[i], "odkryj") == 0)
             {
-                odkryj_mape(a, swiat, dane, chunk, nazwa_folderu, wektor);
+                a = odkryj_mape(a, swiat, dane, chunk, nazwa_folderu, wektor);
             }
             else
             {
@@ -105,9 +105,9 @@ int main(int argc, char **argv)
                 printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"E\"; Reset - \"reset\";\n");
             }
             //a->mapa[0][1] = 'K';
-            printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
-            wypisz(a);
-            printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
+            //printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
+            //wypisz(a);
+            //printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
             zapisz_macierz(nazwa_folderu, a, wektor);
         }
     }

@@ -1,14 +1,17 @@
 #include "mapa.h"
 
-mapa *wczytaj(FILE *fin, wektor *wektor)
+mapa *wczytaj(char *nazwa, wektor *wektor)
 {
+    FILE *fin = fopen(nazwa, "r");
     int i, j;
     mapa *m = (mapa *)malloc(sizeof(mapa));
-    fscanf(fin, "%d ", &wektor->y);
+    fscanf(fin, "wektor: %d ", &wektor->y);
     fscanf(fin, "%d\n", &wektor->x);
-    fscanf(fin, "%d ", &m->rozmiar_y);
+    fscanf(fin, "rozmiar: %d ", &m->rozmiar_y);
     fscanf(fin, "%d\n", &m->rozmiar_x);
-
+    fscanf(fin, "pozycja: %d ", &m->pozycja_y);
+    fscanf(fin, "%d\n", &m->pozycja_x);
+    fscanf(fin, "kierunek: %c\n", &m->kierunek);
     m->mapa = (char **)malloc(sizeof(char *) * m->rozmiar_y);
     for (i = 0; i < m->rozmiar_y; i++)
         m->mapa[i] = (char *)malloc(sizeof(char) * m->rozmiar_x);
@@ -19,6 +22,7 @@ mapa *wczytaj(FILE *fin, wektor *wektor)
             fscanf(fin, "%c ", &m->mapa[i][j]);
         fscanf(fin, "\n");
     }
+    fclose(fin);
     return m;
 }
 
@@ -59,8 +63,10 @@ void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor)
 {
     FILE *fout = fopen(nazwa, "w");
     int i, j;
-    fprintf(fout, "%d %d\n", wektor->y, wektor->x);
-    fprintf(fout, "%d %d\n", m->rozmiar_y, m->rozmiar_x);
+    fprintf(fout, "wektor: %d %d\n", wektor->y, wektor->x);
+    fprintf(fout, "rozmiar: %d %d\n", m->rozmiar_y, m->rozmiar_x);
+    fprintf(fout, "pozycja: %d %d\n", m->pozycja_y, m->pozycja_x);
+    fprintf(fout, "kierunek: %c\n", m->kierunek);
     for (i = m->rozmiar_y - 1; i >= 0; i--)
     {
         for (j = 0; j < m->rozmiar_x; j++)
@@ -88,12 +94,12 @@ mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
     printf("wektor jaki mamy przed wpisaniem y %d x %d\n", wektor->y, wektor->x);
     //int i = 0;
     //int wektor[2] = {0, 0};
-    if (dane->field[1] == NULL)
+    if (dane->field[2] == NULL)
     {
         printf("otrzyamna jedna dana do wpisania \n");
         m->kierunek = dane->direction[0];
-        m->pozycja_x = dane->x[0];
-        m->pozycja_y = dane->y[0];
+        m->pozycja_x = dane->x[0] + wektor->x;
+        m->pozycja_y = dane->y[0] + wektor->y;
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
     }
     else
@@ -102,7 +108,6 @@ mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
         m = wpisywanie_do_mapy(m, dane->y[1], dane->x[1], zwroc_litere(dane, 1), wektor);
         m = wpisywanie_do_mapy(m, dane->y[2], dane->x[2], zwroc_litere(dane, 2), wektor);
-        dane->field[1] = NULL;
         dane->field[2] = NULL;
     }
 

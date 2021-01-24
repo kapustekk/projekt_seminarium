@@ -10,12 +10,12 @@ void wypiszx(mapa *m)
 {
     int c, r;
     printf("       ");
-    for (int x = 0; x < m->rozmiar_y; x++)
+    for (int x = 0; x < m->rozmiar_x; x++)
     {
         printf("%2d", x);
     }
     printf("\n       ");
-    for (int x = 0; x < m->rozmiar_y; x++)
+    for (int x = 0; x < m->rozmiar_x; x++)
         printf("--");
     printf("\n");
     for (c = m->rozmiar_y - 1; c >= 0; c--)
