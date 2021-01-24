@@ -18,7 +18,7 @@ void wypisz(mapa *m)
         for (r = 0; r < m->rozmiar_x; r++)
         {
             // for (r=m->rozmiar_x -1; r >=0; r--) {
-            printf("%c ", m->mapa[c][r]);
+            printf("%c ", m->mapa[r][c]);
         }
         printf("]\n");
     }

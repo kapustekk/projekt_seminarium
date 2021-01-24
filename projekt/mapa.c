@@ -1,19 +1,24 @@
 #include "mapa.h"
 
-mapa *wczytaj(FILE *fin)
+mapa *wczytaj(FILE *fin, wektor *wektor)
 {
     int i, j;
     mapa *m = (mapa *)malloc(sizeof(mapa));
+    fscanf(fin, "%d ", &wektor->y);
+    fscanf(fin, "%d\n", &wektor->x);
+    fscanf(fin, "%d ", &m->rozmiar_y);
     fscanf(fin, "%d\n", &m->rozmiar_x);
-    fscanf(fin, "%d\n", &m->rozmiar_y);
 
-    m->mapa = (char **)malloc(sizeof(char *) * m->rozmiar_x);
-    for (i = 0; i < m->rozmiar_x; i++)
-        m->mapa[i] = (char *)malloc(sizeof(char) * m->rozmiar_y);
-
+    m->mapa = (char **)malloc(sizeof(char *) * m->rozmiar_y);
     for (i = 0; i < m->rozmiar_y; i++)
+        m->mapa[i] = (char *)malloc(sizeof(char) * m->rozmiar_x);
+
+    for (i = m->rozmiar_y - 1; i >= 0; i--)
+    {
         for (j = 0; j < m->rozmiar_x; j++)
-            fscanf(fin, "%c\n", &m->mapa[i][j]);
+            fscanf(fin, "%c ", &m->mapa[i][j]);
+        fscanf(fin, "\n");
+    }
     return m;
 }
 
@@ -50,17 +55,17 @@ void zwolnij(mapa *m)
     free(m);
 }
 
-void zapisz_macierz(char nazwa[], mapa *m)
+void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor)
 {
     FILE *fout = fopen(nazwa, "w");
     int i, j;
-
-    fprintf(fout, "%d\n%d\n", m->rozmiar_x, m->rozmiar_y);
-    for (i = 0; i < m->rozmiar_y; i++)
+    fprintf(fout, "%d %d\n", wektor->y, wektor->x);
+    fprintf(fout, "%d %d\n", m->rozmiar_y, m->rozmiar_x);
+    for (i = m->rozmiar_y - 1; i >= 0; i--)
     {
         for (j = 0; j < m->rozmiar_x; j++)
-            fprintf(fout, "%c\n", m->mapa[i][j]);
-        //fprintf(fout, "\n");
+            fprintf(fout, "%c ", m->mapa[i][j]);
+        fprintf(fout, "\n");
     }
     fclose(fout);
 }
@@ -79,21 +84,24 @@ char zwroc_litere(Dane *dane, int i)
 mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
 {
 
-    printf("3co tu %d %d\n", *dane->y, *dane->x);
-    int i = 0;
+    printf("dane jakie otrzymalismy\ny %d x%d pole %s\ny %d x%d pole %s\ny %d x%d pole %s\n", dane->y[0], dane->x[0], dane->field[0], dane->y[1], dane->x[1], dane->field[1], dane->y[2], dane->x[2], dane->field[2]);
+    printf("wektor jaki mamy przed wpisaniem y %d x %d\n", wektor->y, wektor->x);
+    //int i = 0;
     //int wektor[2] = {0, 0};
     if (dane->field[1] == NULL)
     {
+        printf("otrzyamna jedna dana do wpisania \n");
         m->kierunek = dane->direction[0];
         m->pozycja_x = dane->x[0];
         m->pozycja_y = dane->y[0];
+        m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
     }
-    printf("3co tu %d %d\n", *dane->y, *dane->x);
-    while (dane->field[i])
+    else
     {
-        printf("1 co tu %d %d dane %d %d\n", wektor->y, wektor->x, dane->y[0], dane->x[0]);
-        wpisywanie_do_mapy(m, dane->y[i], dane->x[i], zwroc_litere(dane, i), wektor);
-        i++;
+        printf("otrzymane 3 dane do wpisania\n");
+        m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
+        m = wpisywanie_do_mapy(m, dane->y[1], dane->x[1], zwroc_litere(dane, 1), wektor);
+        m = wpisywanie_do_mapy(m, dane->y[2], dane->x[2], zwroc_litere(dane, 2), wektor);
     }
 
     /*/

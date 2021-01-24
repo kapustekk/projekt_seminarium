@@ -7,6 +7,7 @@
 #include <curl/curl.h>
 #include "../cJSON/cjson.h"
 
+
 typedef struct _Dane
 {
     int x[3];

@@ -6,57 +6,84 @@ void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, in
     *y_wektor = gdzie_zaczynamy - y_json;
 }
 
+void wypiszx(mapa *m)
+{
+    int c, r;
+    printf("       ");
+    for (int x = 0; x < m->rozmiar_y; x++)
+    {
+        printf("%2d", x);
+    }
+    printf("\n       ");
+    for (int x = 0; x < m->rozmiar_y; x++)
+        printf("--");
+    printf("\n");
+    for (c = m->rozmiar_y - 1; c >= 0; c--)
+    {
+        printf("%3d | [ ", c);
+        for (r = 0; r < m->rozmiar_x; r++)
+        {
+            // for (r=m->rozmiar_x -1; r >=0; r--) {
+            printf("%c ", m->mapa[c][r]);
+        }
+        printf("]\n");
+    }
+    printf("\n");
+}
+
 mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
 {
-    printf("1 rozm co tu y %d x %d\n", wejscie->rozmiar_y, wejscie->rozmiar_x);
+    printf("wejsciowy rozmiar mapy y %d x %d \nwejsciowy wektor y %d x %d\npole do wpisania y %d x %d pole %c\n", wejscie->rozmiar_y, wejscie->rozmiar_x, wektor->y, wektor->x, y, x, pole);
+    printf("pole do ktorego powinno byc zzapisane %c to y %d x %d\n", pole, y + wektor->y, x + wektor->x);
     mapa *wyjscie;
     if (x + wektor->x < wejscie->rozmiar_x && y + wektor->y < wejscie->rozmiar_y && x + wektor->x >= 0 && y + wektor->y >= 0)
     {
-        printf("zwykly\n");
+        printf("wpisywanie sucess\n");
         wyjscie = wejscie;
-        wyjscie->mapa[x + wektor->x][y + wektor->y] = pole;
-        printf("co tu %d %d\n", wektor->x, wektor->x);
+        wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
         //wektor->x[0] = 1;
     }
     else
     {
+        printf("za mala mapa rozpowczynam doklejanie \n");
         if (x + wektor->x >= wejscie->rozmiar_x)
         {
             //wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
             wyjscie = doklejanie(wejscie, 'E', wektor);
-            printf(" prawo%d %d \n", y + wektor->y, x + wektor->x);
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
             zwolnij_mape(wejscie);
+            printf("wpisywanie sucess\n");
         }
         else if (y + wektor->y >= wejscie->rozmiar_y)
         {
             //wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
-            printf(" xd %d %d \n", y + wektor->y, x + wektor->x);
+
             wyjscie = doklejanie(wejscie, 'S', wektor);
-            printf(" dol %d %d \n", y + wektor->y, x + wektor->x);
+
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
             zwolnij_mape(wejscie);
+            printf("wpisywanie sucess\n");
         }
         else if (x + wektor->x < 0)
         {
             //wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
 
             wyjscie = doklejanie(wejscie, 'W', wektor);
-            printf("lewo\n");
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
             zwolnij_mape(wejscie);
+            printf("wpisywanie sucess\n");
         }
         else if (y + wektor->y < 0)
         {
             //wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
             wyjscie = doklejanie(wejscie, 'N', wektor);
-            printf("gora %d %d\n", wektor->y, wektor->x);
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
-            printf("gora1\n");
             zwolnij_mape(wejscie);
+            printf("wpisywanie sucess\n");
         }
     }
-    printf("%d %d wektor\n", wektor->x, wektor->x);
+    printf("wyjsciowy wektor %d %d wyjsciowa macierz\n", wektor->x, wektor->x);
+    wypiszx(wyjscie);
     return wyjscie;
 }
 
@@ -73,6 +100,7 @@ void zero(int y, int x, mapa *source)
 
 mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
 {
+    printf("doklejanie mapy w kierunku %c\n", kierunek);
     mapa *wyjscie;
     if (kierunek == 'W')
     {
@@ -91,13 +119,12 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
         wyjscie->rozmiar_y = wejscie->rozmiar_y;
         wyjscie->kierunek = wejscie->kierunek;
         wektor->x = wektor->x + wejscie->rozmiar_x;
+        printf("doklejanie sucess\ndane mapy wyjsciowej rozmiar y %d x %d wektor y %d x %d\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x, wektor->y, wektor->x);
     }
     else if (kierunek == 'E')
     {
         wyjscie = pamiec(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x);
-        printf("costam2\n");
         zero(wejscie->rozmiar_y, 2 * wejscie->rozmiar_x, wyjscie);
-        printf("costam2.5\n");
         for (int i = 0; i < wejscie->rozmiar_y; i++)
         {
             for (int j = 0; j < wejscie->rozmiar_x; j++)
@@ -105,14 +132,12 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
                 wyjscie->mapa[i][j] = wejscie->mapa[i][j];
             }
         }
-        printf("costam3\n");
         wyjscie->pozycja_x = wejscie->pozycja_x;
-        printf("costam4\n");
         wyjscie->pozycja_y = wejscie->pozycja_y;
         wyjscie->rozmiar_x = 2 * wejscie->rozmiar_x;
         wyjscie->rozmiar_y = wejscie->rozmiar_y;
         wyjscie->kierunek = wejscie->kierunek;
-        printf("costam5\n");
+        printf("doklejanie sucess\ndane mapy wyjsciowej rozmiar y %d x %d wektor y %d x %d\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x, wektor->y, wektor->x);
     }
     else if (kierunek == 'N')
     {
@@ -131,12 +156,13 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
         wyjscie->rozmiar_y = 2 * wejscie->rozmiar_y;
         wyjscie->kierunek = wejscie->kierunek;
         wektor->y = wektor->y + wejscie->rozmiar_y;
+        printf("doklejanie sucess\ndane mapy wyjsciowej rozmiar y %d x %d wektor y %d x %d\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x, wektor->y, wektor->x);
     }
     else if (kierunek == 'S')
     {
-        printf("costam1\n");
+
         wyjscie = pamiec(2 * wejscie->rozmiar_y, wejscie->rozmiar_x);
-        printf("costam2\n");
+
         zero(2 * wejscie->rozmiar_y, wejscie->rozmiar_x, wyjscie);
         for (int i = 0; i < wejscie->rozmiar_y; i++)
         {
@@ -145,16 +171,16 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
                 wyjscie->mapa[i][j] = wejscie->mapa[i][j];
             }
         }
-        printf("costam3\n");
-        printf("costam4\n");
+
         wyjscie->pozycja_x = wejscie->pozycja_x;
         wyjscie->pozycja_y = wejscie->pozycja_y;
         wyjscie->rozmiar_x = wejscie->rozmiar_x;
         wyjscie->rozmiar_y = 2 * wejscie->rozmiar_y;
         wyjscie->kierunek = wejscie->kierunek;
+        printf("doklejanie sucess\ndane mapy wyjsciowej rozmiar y %d x %d wektor y %d x %d\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x, wektor->y, wektor->x);
     }
-    printf("costam6\n");
-    printf("%d %d \n", wyjscie->rozmiar_y, wyjscie->rozmiar_x);
+    printf(" rozmiar wyjsciowy %d %d \n wyjsciowa macierz\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x);
+    wypiszx(wyjscie);
     //zwolnij_mape(wejscie);
     return wyjscie;
 }

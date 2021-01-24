@@ -9,21 +9,24 @@
 
 int main(int argc, char **argv)
 {
-    char *swiat = "qwerty_12";
+    char *swiat = "qwerty_13";
     // strcpy(swiat,"qwerty_12");
     Dane *dane = malloc(sizeof(Dane));
     char *nazwa_folderu = "A.txt";
     char *chunk = (char *)malloc(sizeof(char *));
     // Dane *dane=(Dane*)malloc(sizeof(Dane*));
     FILE *fin = fopen(nazwa_folderu, "r");
-    mapa *a = wczytaj(fin);
+    //mapa *a = wczytaj(fin);
     wektor *wektor = malloc(sizeof(wektor));
-    wektor->y = 0;
-    wektor->x = 0;
-    chunk = make_request(info(swiat));
-    dane = interpret_response(chunk, dane);
-    pierwsze_wczytanie(*dane->x, *dane->y, &wektor->x, &wektor->y, 2);
-    a = uzupelnij_macierz(a, dane, wektor);
+    mapa *a = wczytaj(fin, wektor);
+    //wektor->y = 0;
+    //wektor->x = 0;
+    //printf("inicjaliznazja (info request) stworzenie wektora wpisanie obecnej pozycji\n");
+    //chunk = make_request(info(swiat));
+    //dane = interpret_response(chunk, dane);
+    //pierwsze_wczytanie(*dane->x, *dane->y, &wektor->x, &wektor->y, 2);
+    //a = uzupelnij_macierz(a, dane, wektor);
+    //printf("poczatkowa inicjalizacja sucess\n");
     //0-unknown field ; 1 - WALL; 2-GRASS; 3-SAND;
     //KONCOWA MACIERZ
     // 1 1 1 1 1 1 1 1 1
@@ -47,7 +50,7 @@ int main(int argc, char **argv)
     }
     else
     {
-        printf("4co tu %d %d\n", wektor->y, wektor->x);
+        //printf("4co tu %d %d\n", wektor->y, wektor->x);
         for (int i = 1; i < argc; i++)
         {
             if (strcmp(argv[i], "M") == 0)
@@ -86,9 +89,9 @@ int main(int argc, char **argv)
             {
                 chunk = make_request(reset(swiat));
                 dane = interpret_response(chunk, dane);
-                printf("c323 tu %d %d\n", wektor->y, wektor->x);
+                // printf("c323 tu %d %d\n", wektor->y, wektor->x);
                 a = wyczysc_macierz(a);
-                printf("cso tu %d %d\n", wektor->y, wektor->x);
+                // printf("cso tu %d %d\n", wektor->y, wektor->x);
                 a = uzupelnij_macierz(a, dane, wektor);
             }
             else
@@ -98,8 +101,8 @@ int main(int argc, char **argv)
             }
             //a->mapa[0][1] = 'K';
             wypisz(a);
-            printf("x %d, y %d, direction %c w0 %d w1 %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
-            zapisz_macierz(nazwa_folderu, a);
+            printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
+            zapisz_macierz(nazwa_folderu, a,wektor);
         }
     }
     //a = wyczysc_macierz(a);

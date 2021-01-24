@@ -12,7 +12,7 @@ char *wykonaj_ruch(mapa *stan_mapy, int *bilans_rotacji, int *poczatek_sciany)
         poczatek_sciany[1] = NULL;
         return "rotate_left";
     }
-    if (bilans_rotacji[0] != 4 && stan_mapy->pozycja_y == poczatek_sciany[0] && stan_mapy->pozycja_x == poczatek_sciany[1])
+    if (bilans_rotacji[0] == - 4 && stan_mapy->pozycja_y == poczatek_sciany[0] && stan_mapy->pozycja_x == poczatek_sciany[1])
     {
         //mapa jest zamknieta;
     }

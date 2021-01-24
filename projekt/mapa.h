@@ -12,10 +12,10 @@
 //     int **tab;
 // }Macierz;
 
-mapa *wczytaj(FILE *fin);
+mapa *wczytaj(FILE *fin, wektor *wektor);
 void wypisz(mapa *m);
 void zwolnij(mapa *m);
-void zapisz_macierz(char nazwa[], mapa *m);
+void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor);
 mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor);
 mapa *wyczysc_macierz(mapa *m);
 #endif
