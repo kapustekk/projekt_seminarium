@@ -18,7 +18,7 @@ test-connect: connect
 	./test-connect
 
 do_mapy_test: do_mapy_test
-	gcc wpisanie_test.c wpisanie_do_mapy.c -o do_mapy_test
+	gcc wpisanie_test.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -o do_mapy_test
 	valgrind ./do_mapy_test
 	./do_mapy_test 
 clean:

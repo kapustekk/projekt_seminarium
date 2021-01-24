@@ -25,8 +25,14 @@ typedef struct _Mapa
     char kierunek;
 } mapa;
 
-void doklejanie(mapa *wejscie, char kierunek, int wektor[1][2], mapa *wyjscie);
-mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, int wektor[1][2]);
+typedef struct _WEKTOR
+{
+    int x;
+    int y;
+} wektor;
+
+mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor);
+mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor);
 void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, int gdzie_zaczynamy);
 void zero(int x, int y, mapa *source);
 mapa *pamiec(int rozmiar_x, int rozmiar_y);

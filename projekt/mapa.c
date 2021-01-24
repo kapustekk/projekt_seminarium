@@ -11,8 +11,8 @@ mapa *wczytaj(FILE *fin)
     for (i = 0; i < m->rozmiar_x; i++)
         m->mapa[i] = (char *)malloc(sizeof(char) * m->rozmiar_y);
 
-    for (i = 0; i < m->rozmiar_x; i++)
-        for (j = 0; j < m->rozmiar_y; j++)
+    for (i = 0; i < m->rozmiar_y; i++)
+        for (j = 0; j < m->rozmiar_x; j++)
             fscanf(fin, "%c\n", &m->mapa[i][j]);
     return m;
 }
@@ -35,7 +35,7 @@ void wypisz(mapa *m)
         for (r = 0; r < m->rozmiar_x; r++)
         {
             // for (r=m->rozmiar_x -1; r >=0; r--) {
-            printf("%c ", m->mapa[r][c]);
+            printf("%c ", m->mapa[c][r]);
         }
         printf("]\n");
     }
@@ -56,9 +56,9 @@ void zapisz_macierz(char nazwa[], mapa *m)
     int i, j;
 
     fprintf(fout, "%d\n%d\n", m->rozmiar_x, m->rozmiar_y);
-    for (i = 0; i < m->rozmiar_x; i++)
+    for (i = 0; i < m->rozmiar_y; i++)
     {
-        for (j = 0; j < m->rozmiar_y; j++)
+        for (j = 0; j < m->rozmiar_x; j++)
             fprintf(fout, "%c\n", m->mapa[i][j]);
         //fprintf(fout, "\n");
     }
@@ -76,14 +76,23 @@ char zwroc_litere(Dane *dane, int i)
         return 'W';
 }
 
-mapa *uzupelnij_macierz(mapa *m, Dane *dane)
+mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
 {
 
+    printf("3co tu %d %d\n", *dane->y, *dane->x);
     int i = 0;
-    int wektor[2] = {0, 0};
+    //int wektor[2] = {0, 0};
+    if (dane->field[1] == NULL)
+    {
+        m->kierunek = dane->direction[0];
+        m->pozycja_x = dane->x[0];
+        m->pozycja_y = dane->y[0];
+    }
+    printf("3co tu %d %d\n", *dane->y, *dane->x);
     while (dane->field[i])
     {
-        wpisywanie_do_mapy(m, dane->x[i], dane->y[i], zwroc_litere(dane, i), &wektor);
+        printf("1 co tu %d %d dane %d %d\n", wektor->y, wektor->x, dane->y[0], dane->x[0]);
+        wpisywanie_do_mapy(m, dane->y[i], dane->x[i], zwroc_litere(dane, i), wektor);
         i++;
     }
 
