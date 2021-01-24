@@ -51,6 +51,8 @@ mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
             //wyjscie = pamiec(wejscie->rozmiar_y, wejscie->rozmiar_x * 2);
             wyjscie = doklejanie(wejscie, 'E', wektor);
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
+            wyjscie->rozmiar_y = wejscie->rozmiar_y;
+            wyjscie->rozmiar_x = wejscie->rozmiar_x * 2;
             zwolnij_mape(wejscie);
             printf("wpisywanie sucess\n");
         }
@@ -61,6 +63,8 @@ mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
             wyjscie = doklejanie(wejscie, 'S', wektor);
 
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
+            wyjscie->rozmiar_y = wejscie->rozmiar_y * 2;
+            wyjscie->rozmiar_x = wejscie->rozmiar_x;
             zwolnij_mape(wejscie);
             printf("wpisywanie sucess\n");
         }
@@ -70,6 +74,8 @@ mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
 
             wyjscie = doklejanie(wejscie, 'W', wektor);
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
+            wyjscie->rozmiar_y = wejscie->rozmiar_y;
+            wyjscie->rozmiar_x = wejscie->rozmiar_x * 2;
             zwolnij_mape(wejscie);
             printf("wpisywanie sucess\n");
         }
@@ -78,11 +84,13 @@ mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
             //wyjscie = pamiec(wejscie->rozmiar_y * 2, wejscie->rozmiar_x);
             wyjscie = doklejanie(wejscie, 'N', wektor);
             wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
+            wyjscie->rozmiar_y = wejscie->rozmiar_y * 2;
+            wyjscie->rozmiar_x = wejscie->rozmiar_x;
             zwolnij_mape(wejscie);
             printf("wpisywanie sucess\n");
         }
     }
-    printf("wyjsciowy wektor %d %d wyjsciowa macierz\n", wektor->x, wektor->x);
+    printf("wyjsciowy wektor %d %d wysjciowy rozmiar y %d x %dwyjsciowa macierz\n", wektor->x, wektor->x, wyjscie->rozmiar_y, wyjscie->rozmiar_x);
     wypiszx(wyjscie);
     return wyjscie;
 }

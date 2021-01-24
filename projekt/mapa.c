@@ -26,12 +26,12 @@ void wypisz(mapa *m)
 {
     int c, r;
     printf("       ");
-    for (int x = 0; x < m->rozmiar_y; x++)
+    for (int x = 0; x < m->rozmiar_x; x++)
     {
         printf("%2d", x);
     }
     printf("\n       ");
-    for (int x = 0; x < m->rozmiar_y; x++)
+    for (int x = 0; x < m->rozmiar_x; x++)
         printf("--");
     printf("\n");
     for (c = m->rozmiar_y - 1; c >= 0; c--)
@@ -102,6 +102,8 @@ mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
         m = wpisywanie_do_mapy(m, dane->y[1], dane->x[1], zwroc_litere(dane, 1), wektor);
         m = wpisywanie_do_mapy(m, dane->y[2], dane->x[2], zwroc_litere(dane, 2), wektor);
+        dane->field[1] = NULL;
+        dane->field[2] = NULL;
     }
 
     /*/
