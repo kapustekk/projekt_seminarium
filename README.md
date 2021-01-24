@@ -1,8 +1,9 @@
-10.01.2020 - repozytorium, komunikacja, wizualizacja swiata
+Założyli repozytorium GitHUb - nadali sobie uprawnienia.
 
-Wszystkie udało się prawidłowo wykonać wizualizację oraz komunikację.
-Macierz nie jest jeszcze dynamiczna. 
-Do zapełnienia macierzy wykorzystuję plik A.txt(Można zmienić plik main - nazwa folderu...). 
-Pierwsze dwie liczby w pliku txt oznaczają liczbę wierszy oraz kolumn. Wiersze są wyswietlane od końca do zera ponieważ punkt 1 1 jest w lewym dolnym rogu.
-Aby wyzerować macierz (lub zmienić rozmiar zmieniając w pliku) wywołujemy funkcję ./a.out reset, wtedy plik zapełni się tyloma zerami ile trzeba.
-przyjąłem że adresy przekazywane do serwera nie będą większe niż 1024 znaki, co można zmienić zmieniając parametr A.
+1. do 10.01.2020 - repozytorium, komunikacja, wizualizacja swiata
+2. do 28.01.2020 - skoncozny projekt i oddana dokumentacja (w formie raportu PDF)
+
+
+
+[cJSON](https://github.com/DaveGamble/cJSON)
+https://github.com/mozdevs/gamedev-js-tiles
