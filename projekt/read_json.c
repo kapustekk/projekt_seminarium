@@ -36,6 +36,7 @@ Dane* interpret_response(const char* const chunk, Dane *dane)
                     dane->y[i]=y->valueint;
                     dane->field[i] =(char*)malloc(sizeof(char)*strlen((type->valuestring)+1));
                     strcpy(dane->field[i], type->valuestring);
+                    dane->mess=3;
                     i++;
                 }
         }           
@@ -48,6 +49,7 @@ Dane* interpret_response(const char* const chunk, Dane *dane)
             dane->y[0]=current_y->valueint;
             dane->field[0] =field_type->valuestring;
             dane->direction=direction->valuestring;
+            dane->mess=1;
         }
         
     }

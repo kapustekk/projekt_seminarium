@@ -2,21 +2,17 @@
 
 void znajdz_sciane(wektor *wektor, mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat)
 {
-    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, info(swiat), chunk, dane, nazwa_folderu);
-    int x = dane->x[0];
-    int y = dane->y[0];
-    while (x)
+    while (strcmp(dane->field[1],"wall")!=0)
     {
         mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
-        if (x == dane->x[0] && y == dane->y[0])
-        {
-            mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
-            printf("JEST SCIANA!!\n");
-            break;
-        }
-        x = dane->x[0];
-        y = dane->y[0];
+        mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+
     }
+}
+mapa* obroc_explore(wektor *wektor, mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat)
+{
+        mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat,"right"), chunk, dane, nazwa_folderu);
+        mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
 }
 
 char *wykonaj_ruch(mapa *stan_mapy, int *bilans_rotacji, int **poczatek_sciany)
@@ -180,6 +176,19 @@ char *wykonaj_ruch(mapa *stan_mapy, int *bilans_rotacji, int **poczatek_sciany)
     }
     return "wtf";
 }
+mapa* alortym(wektor *wektor, mapa *mapa, char *swiat, char *chunk, Dane *dane, char *nazwa_folderu,int** poczatek_sciany)
+{
+    int bilans_rotacji=0;
+    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
+    bilans_rotacji++;
+    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
+    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+    while(strcmp(dane->field[0],"wall")==0&&strcmp(dane->field[1],"wall")!=0) 
+    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
+    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+    
+    return mapa;
+}
 mapa *uzupelnij_zapisz_wypisz_macierz(wektor *wektor, mapa *mapa, char *url, char *chunk, Dane *dane, char *nazwa_folderu)
 {
 
@@ -208,10 +217,21 @@ mapa *odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_
 
     int bilans_rotacji = 0;
     int *poczatek_sciany = malloc(sizeof(int) * 2);
-
-    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+    int w=0;
+    for(w;w<3;w++)
+    {
+        mapa = obroc_explore(wektor,mapa,chunk,dane,nazwa_folderu,swiat);
+        if(strcmp(dane->field[1],"wall")==0)
+        {
+            printf("Ściana z przodu!");
+            break;
+        }
+    }
+    // mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
     printf("dane: direction:%s\n,mapa direction:%c\n", dane->direction, mapa->kierunek);
     wypisz(mapa);
+    if(w==3)
+    znajdz_sciane(wektor,mapa,chunk,dane,nazwa_folderu,swiat);
     int i = 0;
     /*while (strcmp(dane->field[1], "wall") != 0)
     {
@@ -227,11 +247,12 @@ mapa *odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_
     poczatek_sciany[0] = dane->y[1];
     poczatek_sciany[1] = dane->x[1];
     printf("po znalzezieniu pocz sciany:\nstan mapy: rozmiar: y %d x %d \nkierunek %c\npolozenie y %d x %d\n", mapa->rozmiar_y, mapa->rozmiar_x, mapa->kierunek, mapa->pozycja_y, mapa->pozycja_x);
-    for (int i = 0; i < 5; i++)
+    for (int i = 0; i < 10; i++)
     {
         printf("wchodze do for\nruch nr %d\n\n\n", i);
         printf(" ruch-> %s\n", wykonaj_ruch(mapa, &bilans_rotacji, &poczatek_sciany));
-        mapa = co_zrobic(wykonaj_ruch(mapa, &bilans_rotacji, &poczatek_sciany), mapa, swiat, chunk, dane, nazwa_folderu, wektor);
+        // mapa = co_zrobic(wykonaj_ruch(mapa, &bilans_rotacji, &poczatek_sciany), mapa, swiat, chunk, dane, nazwa_folderu, wektor);
+        mapa = alortym(wektor,mapa,swiat,chunk,dane,nazwa_folderu,&poczatek_sciany);
     }
 
     wypisz(mapa);
