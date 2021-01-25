@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "../read_json.h"
 #define A 1024
 int check_info(Dane *dane)
