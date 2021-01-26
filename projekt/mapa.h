@@ -15,7 +15,7 @@
 mapa *wczytaj(char *nazwa, wektor *wektor);
 void wypisz(mapa *m);
 void zwolnij(mapa *m);
-void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor);
+void zapisz_macierz(char nazwa[], mapa m, wektor wektor);
 mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor);
 mapa *wyczysc_macierz(mapa *m);
 #endif

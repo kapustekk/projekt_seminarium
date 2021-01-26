@@ -6,6 +6,8 @@ url:
 	cc url.c tests/test-url.c -o test-url
 connect:
 	cc connect.c tests/test-connect.c -lcurl -o test-connect
+do_mapy:
+	cc wpisanie_test.c wpisanie_do_mapy.c mapa.c -o do_mapy_test
 
 test-read: read
 	valgrind ./test-read
@@ -17,11 +19,11 @@ test-connect: connect
 	valgrind ./test-url
 	./test-connect
 
-do_mapy_test: do_mapy_test
-	gcc wpisanie_test.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -lcurl -o do_mapy_test ../cJSON/cjson.o
-	valgrind ./do_mapy_test
+do_mapy_test: do_mapy
+	
 	./do_mapy_test 
 clean:
 	rm -f do_mapy_test
 	rm -f *.o
-
+logika:
+	cc logic_test.c mapa.c read_json.c url.c connect.c wpisanie_do_mapy.c logic.c -lcurl ../cJSON/cjson.o -o test

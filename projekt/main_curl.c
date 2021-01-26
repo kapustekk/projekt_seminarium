@@ -10,7 +10,7 @@
 
 int main(int argc, char **argv)
 {
-    char *swiat = "qwerty_13";
+    char *swiat = "qwerty_12";
     // strcpy(swiat,"qwerty_12");
     Dane *dane = malloc(sizeof(Dane));
     char *nazwa_folderu = "A.txt";
@@ -19,7 +19,14 @@ int main(int argc, char **argv)
     //FILE *fin = fopen(nazwa_folderu, "r");
     //mapa *a = wczytaj(fin);
     wektor *wektor = malloc(sizeof(wektor));
-    mapa *a = wczytaj(nazwa_folderu, wektor);
+    //mapa *a = wczytaj(nazwa_folderu, wektor);
+    mapa *a = pamiec(5, 5);
+    zero(5, 5, a);
+    a->pozycja_y = 3;
+    a->pozycja_x = 3;
+    chunk = make_request(info(swiat));
+    dane = interpret_response(chunk, dane);
+    wektor = pierwsze_wczytanie(dane->x[0], dane->y[0], wektor, 2);
     //wektor->y = 0;
     //wektor->x = 0;
     //printf("inicjaliznazja (info request) stworzenie wektora wpisanie obecnej pozycji\n");
@@ -106,7 +113,7 @@ int main(int argc, char **argv)
             }
             //a->mapa[0][1] = 'K';
             //printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
-            wypisz(a);
+            //wypisz(a);
             //printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
             zapisz_macierz(nazwa_folderu, a, wektor);
         }

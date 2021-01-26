@@ -53,24 +53,24 @@ void wypisz(mapa *m)
 
 void zwolnij(mapa *m)
 {
-    for (int i = 0; i < m->rozmiar_x; i++)
+    for (int i = 0; i < m->rozmiar_y; i++)
         free(m->mapa[i]);
     free(m->mapa);
     free(m);
 }
 
-void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor)
+void zapisz_macierz(char nazwa[], mapa m, wektor wektor)
 {
-    FILE *fout = fopen(nazwa, "w");
+    FILE *fout = fopen(nazwa, "w+");
     int i, j;
-    fprintf(fout, "wektor: %d %d\n", wektor->y, wektor->x);
-    fprintf(fout, "rozmiar: %d %d\n", m->rozmiar_y, m->rozmiar_x);
-    fprintf(fout, "pozycja: %d %d\n", m->pozycja_y, m->pozycja_x);
-    fprintf(fout, "kierunek: %c\n", m->kierunek);
-    for (i = m->rozmiar_y - 1; i >= 0; i--)
+    fprintf(fout, "wektor: %d %d\n", wektor.y, wektor.x);
+    fprintf(fout, "rozmiar: %d %d\n", m.rozmiar_y, m.rozmiar_x);
+    fprintf(fout, "pozycja: %d %d\n", m.pozycja_y, m.pozycja_x);
+    fprintf(fout, "kierunek: %c\n", m.kierunek);
+    for (i = m.rozmiar_y - 1; i >= 0; i--)
     {
-        for (j = 0; j < m->rozmiar_x; j++)
-            fprintf(fout, "%c ", m->mapa[i][j]);
+        for (j = 0; j < m.rozmiar_x; j++)
+            fprintf(fout, "%c ", m.mapa[i][j]);
         fprintf(fout, "\n");
     }
     fclose(fout);
@@ -94,21 +94,20 @@ mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
     // printf("wektor jaki mamy przed wpisaniem y %d x %d\n", wektor->y, wektor->x);
     //int i = 0;
     //int wektor[2] = {0, 0};
-    if (dane->mess==1)
+    if (dane->mess == 1)
     {
+        printf("otrzyamna jedna dana do wpisania \n");
         m->kierunek = dane->direction[0];
         m->pozycja_x = dane->x[0] + wektor->x;
         m->pozycja_y = dane->y[0] + wektor->y;
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
-        dane->mess=0;
     }
-    else if(dane->mess==3)
+    else
     {
         printf("otrzymane 3 dane do wpisania\n");
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
         m = wpisywanie_do_mapy(m, dane->y[1], dane->x[1], zwroc_litere(dane, 1), wektor);
         m = wpisywanie_do_mapy(m, dane->y[2], dane->x[2], zwroc_litere(dane, 2), wektor);
-        dane->mess=0;
     }
 
     /*/
