@@ -90,24 +90,25 @@ char zwroc_litere(Dane *dane, int i)
 mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor)
 {
 
-    printf("dane jakie otrzymalismy\ny %d x%d pole %s\ny %d x%d pole %s\ny %d x%d pole %s\n", dane->y[0], dane->x[0], dane->field[0], dane->y[1], dane->x[1], dane->field[1], dane->y[2], dane->x[2], dane->field[2]);
-    printf("wektor jaki mamy przed wpisaniem y %d x %d\n", wektor->y, wektor->x);
+    // printf("dane jakie otrzymalismy\ny %d x%d pole %s\ny %d x%d pole %s\ny %d x%d pole %s\n", dane->y[0], dane->x[0], dane->field[0], dane->y[1], dane->x[1], dane->field[1], dane->y[2], dane->x[2], dane->field[2]);
+    // printf("wektor jaki mamy przed wpisaniem y %d x %d\n", wektor->y, wektor->x);
     //int i = 0;
     //int wektor[2] = {0, 0};
     if (dane->mess==1)
     {
-        printf("otrzyamna jedna dana do wpisania \n");
         m->kierunek = dane->direction[0];
         m->pozycja_x = dane->x[0] + wektor->x;
         m->pozycja_y = dane->y[0] + wektor->y;
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
+        dane->mess=0;
     }
-    else
+    else if(dane->mess==3)
     {
         printf("otrzymane 3 dane do wpisania\n");
         m = wpisywanie_do_mapy(m, dane->y[0], dane->x[0], zwroc_litere(dane, 0), wektor);
         m = wpisywanie_do_mapy(m, dane->y[1], dane->x[1], zwroc_litere(dane, 1), wektor);
         m = wpisywanie_do_mapy(m, dane->y[2], dane->x[2], zwroc_litere(dane, 2), wektor);
+        dane->mess=0;
     }
 
     /*/

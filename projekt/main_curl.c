@@ -106,7 +106,7 @@ int main(int argc, char **argv)
             }
             //a->mapa[0][1] = 'K';
             //printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
-            //wypisz(a);
+            wypisz(a);
             //printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
             zapisz_macierz(nazwa_folderu, a, wektor);
         }

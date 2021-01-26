@@ -28,7 +28,8 @@ int main()
     wypisz(start);
     printf("%d %d\n", wektor->y, wektor->x);
     printf("%d %d \n", start->rozmiar_y, start->rozmiar_x);
+    printf("koniec!!\n");
     zwolnij_mape(start);
-    //free(start);
-    //int *ptr = malloc(sizeof(int) * 15);
+    // free(start);
+    // int *ptr = malloc(sizeof(int) * 15);
 }

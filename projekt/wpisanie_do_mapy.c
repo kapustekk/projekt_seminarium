@@ -33,12 +33,12 @@ void wypiszx(mapa *m)
 
 mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
 {
-    printf("wejsciowy rozmiar mapy y %d x %d \nwejsciowy wektor y %d x %d\npole do wpisania y %d x %d pole %c\n", wejscie->rozmiar_y, wejscie->rozmiar_x, wektor->y, wektor->x, y, x, pole);
-    printf("pole do ktorego powinno byc zzapisane %c to y %d x %d\n", pole, y + wektor->y, x + wektor->x);
+    // printf("wejsciowy rozmiar mapy y %d x %d \nwejsciowy wektor y %d x %d\npole do wpisania y %d x %d pole %c\n", wejscie->rozmiar_y, wejscie->rozmiar_x, wektor->y, wektor->x, y, x, pole);
+    // printf("pole do ktorego powinno byc zzapisane %c to y %d x %d\n", pole, y + wektor->y, x + wektor->x);
     mapa *wyjscie;
     if (x + wektor->x < wejscie->rozmiar_x && y + wektor->y < wejscie->rozmiar_y && x + wektor->x >= 0 && y + wektor->y >= 0)
     {
-        printf("wpisywanie sucess\n");
+        // printf("wpisywanie sucess\n");
         wyjscie = wejscie;
         wyjscie->mapa[y + wektor->y][x + wektor->x] = pole;
         //wektor->x[0] = 1;
@@ -90,8 +90,8 @@ mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor)
             printf("wpisywanie sucess\n");
         }
     }
-    printf("wyjsciowy wektor %d %d wysjciowy rozmiar y %d x %dwyjsciowa macierz\n", wektor->x, wektor->x, wyjscie->rozmiar_y, wyjscie->rozmiar_x);
-    wypiszx(wyjscie);
+    // printf("wyjsciowy wektor %d %d wysjciowy rozmiar y %d x %dwyjsciowa macierz\n", wektor->x, wektor->x, wyjscie->rozmiar_y, wyjscie->rozmiar_x);
+    // wypiszx(wyjscie);
     return wyjscie;
 }
 
@@ -189,7 +189,7 @@ mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor)
     }
     printf(" rozmiar wyjsciowy %d %d \n wyjsciowa macierz\n", wyjscie->rozmiar_y, wyjscie->rozmiar_x);
     wypiszx(wyjscie);
-    zwolnij_mape(wejscie);
+    // zwolnij_mape(wejscie);
     return wyjscie;
 }
 
