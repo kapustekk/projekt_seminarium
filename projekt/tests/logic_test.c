@@ -5,11 +5,11 @@ void niby_ruch(mapa *mapa, char *ruch)
 {
     if (strcmp(ruch, "move") == 0)
     {
-        if (mapa->kierunek == 'N')
+        if (mapa->kierunek == 'S')
         {
             mapa->pozycja_y--;
         }
-        if (mapa->kierunek == 'S')
+        if (mapa->kierunek == 'N')
         {
             mapa->pozycja_y++;
         }
@@ -24,40 +24,40 @@ void niby_ruch(mapa *mapa, char *ruch)
     }
     else if (strcmp(ruch, "rotate_left") == 0)
     {
-        if (mapa->kierunek == 'N')
+        if (mapa->kierunek == 'S')
         {
             mapa->kierunek = 'W';
         }
-        if (mapa->kierunek == 'S')
+        if (mapa->kierunek == 'N')
         {
             mapa->kierunek = 'E';
         }
         if (mapa->kierunek == 'E')
         {
-            mapa->kierunek = 'N';
+            mapa->kierunek = 'S';
         }
         if (mapa->kierunek == 'W')
         {
-            mapa->kierunek = 'S';
+            mapa->kierunek = 'N';
         }
     }
     else if (strcmp(ruch, "rotate_right") == 0)
     {
-        if (mapa->kierunek == 'N')
+        if (mapa->kierunek == 'S')
         {
             mapa->kierunek = 'E';
         }
-        if (mapa->kierunek == 'S')
+        if (mapa->kierunek == 'N')
         {
             mapa->kierunek = 'W';
         }
         if (mapa->kierunek == 'E')
         {
-            mapa->kierunek = 'S';
+            mapa->kierunek = 'N';
         }
         if (mapa->kierunek == 'W')
         {
-            mapa->kierunek = 'N';
+            mapa->kierunek = 'S';
         }
     }
 }
