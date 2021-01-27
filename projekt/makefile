@@ -17,10 +17,16 @@ test-connect: connect
 	valgrind ./test-url
 	./test-connect
 
-do_mapy_test: do_mapy_test
-	gcc wpisanie_test.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -o do_mapy_test -lcurl ../cJSON/cjson.o
-	valgrind ./do_mapy_test
-	./do_mapy_test 
+test-wpisanie_do_mapy: test-wpisanie_do_mapy
+	gcc tests/wpisanie_test.c connect.c read_json.c wpisanie_do_mapy.c -o test-wpisanie_do_mapy -lcurl ../cJSON/cjson.o
+	valgrind ./test-wpisanie_do_mapy
+	./test-wpisanie_do_mapy 
+
+test-logic: test-logic
+	gcc tests/logic_test.c url.c logic.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -o test-logic -lcurl ../cJSON/cjson.o
+	valgrind ./test-logic
+	./test-logic
+
 clean:
 	rm -f do_mapy_test
 	rm -f *.o
