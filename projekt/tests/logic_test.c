@@ -24,40 +24,40 @@ void niby_ruch(mapa *mapa, char *ruch)
     }
     else if (strcmp(ruch, "rotate_left") == 0)
     {
-        if (mapa->kierunek == 'S')
+        if (mapa->kierunek == 'N')
         {
             mapa->kierunek = 'W';
         }
-        if (mapa->kierunek == 'N')
+        if (mapa->kierunek == 'S')
         {
             mapa->kierunek = 'E';
         }
         if (mapa->kierunek == 'E')
         {
-            mapa->kierunek = 'S';
+            mapa->kierunek = 'N';
         }
         if (mapa->kierunek == 'W')
         {
-            mapa->kierunek = 'N';
+            mapa->kierunek = 'S';
         }
     }
     else if (strcmp(ruch, "rotate_right") == 0)
     {
-        if (mapa->kierunek == 'S')
+        if (mapa->kierunek == 'N')
         {
             mapa->kierunek = 'E';
         }
-        if (mapa->kierunek == 'N')
+        if (mapa->kierunek == 'S')
         {
             mapa->kierunek = 'W';
         }
         if (mapa->kierunek == 'E')
         {
-            mapa->kierunek = 'N';
+            mapa->kierunek = 'S';
         }
         if (mapa->kierunek == 'W')
         {
-            mapa->kierunek = 'S';
+            mapa->kierunek = 'N';
         }
     }
 }
@@ -71,10 +71,10 @@ int main()
     test->pozycja_y = 2;
     test->kierunek = 'E';
     zero(10, 5, test);
-    test->mapa[0][0] = 'G';
-    test->mapa[0][1] = 'G';
-    test->mapa[0][2] = 'G';
-    test->mapa[0][3] = 'G';
+    test->mapa[0][0] = 'W';
+    test->mapa[0][1] = 'W';
+    test->mapa[0][2] = 'W';
+    test->mapa[0][3] = 'W';
     test->mapa[0][4] = 'W';
     test->mapa[1][0] = 'W';
     test->mapa[1][1] = 'G';
@@ -118,9 +118,9 @@ int main()
     test->mapa[8][3] = 'G';
     test->mapa[8][4] = 'W';
     test->mapa[9][0] = 'W';
-    test->mapa[9][1] = 'G';
-    test->mapa[9][2] = 'G';
-    test->mapa[9][3] = 'G';
+    test->mapa[9][1] = 'W';
+    test->mapa[9][2] = 'W';
+    test->mapa[9][3] = 'W';
     test->mapa[9][4] = 'W';
     int sciana[2] = {3, 4};
     //printf("cojset\n");
