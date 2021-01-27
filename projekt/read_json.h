@@ -7,12 +7,6 @@
 #include "wpisanie.h"
 #include"mapa.h"
 
-typedef struct _Memory
-{
-    char *response;
-    size_t size;
-} Memory;
-
 Dane *interpret_response(const char *const chunk, Dane *dane);
 
 #endif

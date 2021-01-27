@@ -278,7 +278,7 @@ void odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_f
     int w = 0;
     for (w; w < 3; w++)
     {
-        ile_ruchow[0] + 4;
+        ile_ruchow[0] = ile_ruchow[0] + 4;
         mapa = obroc_explore(wektor, mapa, chunk, dane, nazwa_folderu, swiat);
         if (strcmp(dane->field[1], "wall") == 0)
             break;
