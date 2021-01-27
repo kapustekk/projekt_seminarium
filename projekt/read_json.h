@@ -5,6 +5,7 @@
 #include <string.h>
 #include "../cJSON/cJSON.h"
 #include "wpisanie.h"
+#include"mapa.h"
 
 typedef struct _Memory
 {

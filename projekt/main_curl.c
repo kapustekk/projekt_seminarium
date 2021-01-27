@@ -2,55 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 #include <curl/curl.h>
-#include "mapa.h"
-#include "read_json.h"
-#include "connect.h"
-#include "url.h"
 #include "logic.h"
 
 int main(int argc, char **argv)
 {
-    char *swiat = "qwerty_12";
-    // strcpy(swiat,"qwerty_12");
+    char *swiat = "qwerty_13";
     Dane *dane = malloc(sizeof(Dane));
     char *nazwa_folderu = "A.txt";
     char *chunk = (char *)malloc(sizeof(char *));
-    // Dane *dane=(Dane*)malloc(sizeof(Dane*));
-    //FILE *fin = fopen(nazwa_folderu, "r");
-    //mapa *a = wczytaj(fin);
     wektor *wektor = malloc(sizeof(wektor));
-    //mapa *a = wczytaj(nazwa_folderu, wektor);
-    mapa *a = pamiec(5, 5);
-    zero(5, 5, a);
-    a->pozycja_y = 3;
-    a->pozycja_x = 3;
-    chunk = make_request(info(swiat));
-    dane = interpret_response(chunk, dane);
-    wektor = pierwsze_wczytanie(dane->x[0], dane->y[0], wektor, 2);
-    //wektor->y = 0;
-    //wektor->x = 0;
-    //printf("inicjaliznazja (info request) stworzenie wektora wpisanie obecnej pozycji\n");
-    //chunk = make_request(info(swiat));
-    //dane = interpret_response(chunk, dane);
-    //pierwsze_wczytanie(*dane->x, *dane->y, &wektor->x, &wektor->y, 2);
-    //a = uzupelnij_macierz(a, dane, wektor);
-    //printf("poczatkowa inicjalizacja sucess\n");
-    //0-unknown field ; 1 - WALL; 2-GRASS; 3-SAND;
-    //KONCOWA MACIERZ
-    // 1 1 1 1 1 1 1 1 1
-    // 1 2 2 2 2 1 2 2 1
-    // 1 2 1 1 2 1 2 1 1
-    // 1 2 2 1 2 1 2 2 1
-    // 1 2 2 2 2 2 2 2 1
-    // 1 2 1 1 2 1 2 2 1
-    // 1 2 1 3 2 1 2 2 1
-    // 1 2 1 1 2 1 2 1 1
-    // 1 2 3 1 2 1 3 3 1
-    // 1 2 3 2 2 1 2 2 1
-    // 1 2 2 2 2 1 2 2 1
-    // 1 1 1 1 1 1 1 1 1
+    mapa *a = wczytaj(nazwa_folderu, wektor);
 
-    // char *url;
     if (argc == 1)
     {
         printf("podaj operacje!\n");
@@ -90,21 +52,18 @@ int main(int argc, char **argv)
             {
                 chunk = make_request(explore(swiat));
                 dane = interpret_response(chunk, dane);
-                // printf("%d, %d, %s",dane->x[0],dane->y[0],dane->field[0]);
                 a = uzupelnij_macierz(a, dane, wektor);
             }
             else if (strcmp(argv[i], "reset") == 0)
             {
                 chunk = make_request(reset(swiat));
                 dane = interpret_response(chunk, dane);
-                // printf("c323 tu %d %d\n", wektor->y, wektor->x);
                 a = wyczysc_macierz(a);
-                // printf("cso tu %d %d\n", wektor->y, wektor->x);
                 a = uzupelnij_macierz(a, dane, wektor);
             }
             else if (strcmp(argv[i], "odkryj") == 0)
             {
-                a = odkryj_mape(a, swiat, dane, chunk, nazwa_folderu, wektor);
+                odkryj_mape(a, swiat, dane, chunk, nazwa_folderu, wektor);
             }
             else
             {
@@ -112,20 +71,13 @@ int main(int argc, char **argv)
                 printf("Move - \"M\"; Rotate - \"Rr/Rl\"; Info - \"info\"; Explore - \"E\"; Reset - \"reset\";\n");
             }
             //a->mapa[0][1] = 'K';
-            //printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
-            //wypisz(a);
-            //printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
+            printf("waielkosc mapy y %d x %d\n", a->rozmiar_y, a->rozmiar_x);
+            wypisz(a);
+            printf("pozycja koncowa x %d, y %d, direction %c wektor koncowy y %d x %d\n", a->pozycja_y, a->pozycja_x, a->kierunek, wektor->y, wektor->x);
             zapisz_macierz(nazwa_folderu, a, wektor);
         }
     }
-    // printf("pole 12 2 %c\n", a->mapa[12][2]);
-    //a = wyczysc_macierz(a);
-    // a->mapa[3][3] = 'f';
-    //zapisz_macierz("A.txt", a);
-    //wczytaj(fin);
-    //a->mapa[1][1] = 'b';
-    //wypisz(a);
-    //zapisz_macierz("A.txt", a);
-    // char *url = argc < 2 ? "http://edi.iem.pw.edu.pl:30000/worlds/api/v1/worlds/info/qwerty_12" : argv[1];
+    zwolnij_mape(a);
+
     return 0;
 }

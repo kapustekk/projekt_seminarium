@@ -1,7 +1,6 @@
 #include "logic.h"
 #include "wpisanie.h"
 
-
 void niby_ruch(mapa *mapa, char *ruch)
 {
     if (strcmp(ruch, "move") == 0)
@@ -97,9 +96,7 @@ int main()
     test->mapa[4][2] = 'W';
     test->mapa[4][3] = 'G';
     test->mapa[4][4] = 'W';
-    int **sciana = malloc(sizeof(int *));
-    *sciana[0] = 3,
-    *sciana[1] = 4;
+    int sciana[2] = {3, 4};
     //printf("cojset\n");
     int rotacje = 0;
     char *wynik;

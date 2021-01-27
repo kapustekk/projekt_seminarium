@@ -7,6 +7,7 @@
 #include <curl/curl.h>
 #include "../cJSON/cjson.h"
 
+
 typedef struct _Dane
 {
     int x[3];
@@ -34,10 +35,9 @@ typedef struct _WEKTOR
 
 mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor);
 mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor);
-wektor *pierwsze_wczytanie(int x_json, int y_json, wektor *wektor, int gdzie_zaczynamy);
+void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, int gdzie_zaczynamy);
 void zero(int x, int y, mapa *source);
 mapa *pamiec(int rozmiar_x, int rozmiar_y);
 void zwolnij_mape(mapa *co);
-void wypiszx(mapa *m);
 
 #endif
