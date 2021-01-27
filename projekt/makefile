@@ -27,6 +27,11 @@ test-logic: test-logic
 	valgrind ./test-logic
 	./test-logic
 
+test-mapa: test-mapa
+	gcc tests/test_mapa.c mapa.c wpisanie_do_mapy.c -o test-mapa
+	valgrind ./test-mapa
+	./test-mapa
+
 clean:
 	rm -f do_mapy_test
 	rm -f *.o
