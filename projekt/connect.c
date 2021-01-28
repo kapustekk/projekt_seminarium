@@ -6,7 +6,7 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
     size_t realsize = size * nmemb;
 
     /* jawnie konwertujemy (void*) na naszą strukturę, bo wiemy, że będziemy ją tutaj otrzymywać */
-    Memory *mem = (Memory *)userp;
+    Memory *mem = (Memory *) userp;
 
     char *ptr = NULL;
 
@@ -30,7 +30,7 @@ static size_t write_callback(void *data, size_t size, size_t nmemb, void *userp)
     return realsize;
 }
 
-char *make_request(char *url)
+char * make_request(char *url)
 {
     CURL *curl;
     CURLcode res;

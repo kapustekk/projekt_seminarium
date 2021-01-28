@@ -1,59 +1,54 @@
+#include "../mapa.h"
 #include "../wpisanie.h"
-
-void wypisz(mapa *m)
-{
-    int c, r;
-    printf("       ");
-    for (int x = 0; x < m->rozmiar_x; x++)
-    {
-        printf("%2d", x);
-    }
-    printf("\n       ");
-    for (int x = 0; x < m->rozmiar_x; x++)
-        printf("--");
-    printf("\n");
-    for (c = 0; c < m->rozmiar_y; c++)
-    {
-        printf("%3d | [ ", c);
-        for (r = 0; r < m->rozmiar_x; r++)
-        {
-            // for (r=m->rozmiar_x -1; r >=0; r--) {
-            printf("%c ", m->mapa[r][c]);
-        }
-        printf("]\n");
-    }
-    printf("\n");
-}
 
 int main()
 {
-    mapa *start = pamiec(5, 5);
-    zero(5, 5, start);
-    //mapa *koniec = pamiec(5, 5);
-    //zero(5, 5, koniec);
-    start->rozmiar_x = 5;
-    start->rozmiar_y = 5;
-    start->mapa[2][2] = 'p';
-    start->mapa[2][3] = 'z';
-    start->mapa[0][0] = 'U';
-    //int *wektor = malloc(sizeof(int ) * 2);
-    wektor *wektor = malloc(sizeof(wektor));
-    wektor->x = 0;
-    wektor->y = 0;
-    start = wpisywanie_do_mapy(start, -2, 2, 'W', wektor);
-    printf("costam\n");
-    wypisz(start);
-    start = wpisywanie_do_mapy(start, -2, -3, 'A', wektor);
-    wypisz(start);
-    start = wpisywanie_do_mapy(start, 7, 2, 'S', wektor);
-    wypisz(start);
-    start = wpisywanie_do_mapy(start, 2, 8, 'D', wektor);
-    wypisz(start);
-    printf("wartosc %c\n", start->mapa[2][7]);
-    wypisz(start);
-    printf("%d %d\n", wektor->y, wektor->x);
-    printf("%d %d \n", start->rozmiar_y, start->rozmiar_x);
-    zwolnij_mape(start);
-    //free(start);
-    //int *ptr = malloc(sizeof(int) * 15);
+    mapa *map = (mapa *)malloc(sizeof(mapa));
+    map = resetuj_mape(map);
+    map->mapa[3][3] = 'X';
+    map->mapa[4][3] = 'Y';
+    map->kierunek = 'N';
+    wypisz(map);
+    map = wpisanie_do_mapy(map, 2, 2, 'F');
+    printf("kierunek= %c\n", map->kierunek);
+    map->mapa[4][4] = 'D';
+    wypisz(map);
+    map = wpisanie_do_mapy(map, -3, 2, 'C');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    map = wpisanie_do_mapy(map, -3, 8, 'G');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    map = wpisanie_do_mapy(map, 7, 2, 'I');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    zapisz_macierz("B.txt", map);
+    wczytaj("B.txt", map);
+    map = wpisanie_do_mapy(map, -3, -3, 'Q');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    zapisz_macierz("B.txt", map);
+    map->mapa[3][3] = 'C';
+    wypisz(map);
+    map = wpisanie_do_mapy(map, 5, 2, 'F');
+    printf("kierunek= %c\n", map->kierunek);
+    map->mapa[4][4] = 'D';
+    wypisz(map);
+    map = wpisanie_do_mapy(map, 7, 2, 'C');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    map = wpisanie_do_mapy(map, -13, 8, 'G');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    map = wpisanie_do_mapy(map, 40, 2, 'I');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    zapisz_macierz("B.txt", map);
+    wczytaj("B.txt", map);
+    map = wpisanie_do_mapy(map, 0, -20, 'Q');
+    printf("kierunek= %c\n", map->kierunek);
+    wypisz(map);
+    zapisz_macierz("B.txt", map);
+    zwolnij(map);
+    free(map);
 }

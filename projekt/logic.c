@@ -1,18 +1,18 @@
 #include "logic.h"
 
-mapa *znajdz_sciane(wektor *wektor, mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat, int *ile_ruchow)
+mapa *znajdz_sciane(mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat, int *ile_ruchow)
 {
-    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, info(swiat), chunk, dane, nazwa_folderu);
+    mapa = uzupelnij_zapisz_wypisz_macierz(mapa, info(swiat), chunk, dane, nazwa_folderu);
     ile_ruchow[0]++;
     int x = dane->x[0];
     int y = dane->y[0];
     while (x)
     {
-        mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
+        mapa = uzupelnij_zapisz_wypisz_macierz(mapa, move(swiat), chunk, dane, nazwa_folderu);
         ile_ruchow[0]++;
         if (x == dane->x[0] && y == dane->y[0])
         {
-            // mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+
             if (mapa->kierunek == 'N')
             {
                 if (mapa->mapa[mapa->pozycja_y + 1][mapa->pozycja_x] == '_')
@@ -49,19 +49,34 @@ mapa *znajdz_sciane(wektor *wektor, mapa *mapa, char *chunk, Dane *dane, char *n
     }
     return mapa;
 }
-mapa *obroc_explore(wektor *wektor, mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat)
+mapa *obroc_explore(mapa *mapa, char *chunk, Dane *dane, char *nazwa_folderu, char *swiat)
 {
-    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
-    mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
+    mapa = uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
+    mapa = uzupelnij_zapisz_wypisz_macierz(mapa, explore(swiat), chunk, dane, nazwa_folderu);
     return mapa;
 }
 
-char *co_zrobic(mapa *stan_mapy, int *bilans_rotacji, int x_pocz, int y_pocz)
+char *wykonaj_ruch(mapa *stan_mapy, int *bilans_rotacji, int y_pocz, int x_pocz)
 {
-    printf("stan mapy->kierunek:%c\n", stan_mapy->kierunek);
-
-    printf("bilans rotacji=%d\n", bilans_rotacji[0]);
-
+    //printf("stan mapy->kierunek:%c\n", stan_mapy->kierunek);
+    //printf("bilans rotacji=%d\n", bilans_rotacji[0]);
+    //printf("pozycja y %d x %d\nrozmiar y %d x %d\nwektor y %d x %d\nbilans rotacji %d \n yw funkcji %i x w funkcji %c\n", stan_mapy->pozycja_y, stan_mapy->pozycja_x, stan_mapy->rozmiar_y, stan_mapy->rozmiar_x, stan_mapy->wektor_y, stan_mapy->wektor_x, y_pocz, x_pocz);
+    if (stan_mapy->pozycja_y + 1 > stan_mapy->rozmiar_y)
+    {
+        doklejanie_gora(stan_mapy);
+    }
+    if (stan_mapy->pozycja_y - 1 < 0)
+    {
+        doklejanie_dol(stan_mapy);
+    }
+    if (stan_mapy->pozycja_x - 1 < 0)
+    {
+        doklejanie_lewo(stan_mapy);
+    }
+    if (stan_mapy->pozycja_x + 1 > stan_mapy->rozmiar_x)
+    {
+        doklejanie_prawo(stan_mapy);
+    }
     //w prawo +1 w lewo -1
     if (bilans_rotacji[0] == 4 && stan_mapy->pozycja_y == y_pocz && stan_mapy->pozycja_x == x_pocz)
     {
@@ -75,37 +90,43 @@ char *co_zrobic(mapa *stan_mapy, int *bilans_rotacji, int x_pocz, int y_pocz)
     }
     if (stan_mapy->kierunek == 'N') //polnoc ,gora
     {
-        printf("wszedlem w N\n");
-        if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] == '_' || //są z przodu JAKIEKOLWIEK puste pola
+
+        if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] == '_' ||
             stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x + 1] == '_' ||
             stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x - 1] == '_')
         {
+
             return "explore";
         }
-        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x + 1] != 'W' && //Mam z przodu po prawej G lub S
-                 stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W' &&     //przed sobą mam G lub S
-                 stan_mapy->mapa[stan_mapy->pozycja_y][stan_mapy->pozycja_x + 1] == 'W')       //z prawej mam ścianę
+        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x + 1] != 'W' &&
+                 stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W' &&
+                 stan_mapy->mapa[stan_mapy->pozycja_y][stan_mapy->pozycja_x + 1] == 'W')
         {
             bilans_rotacji[0]++;
+
             return "M_Rr_M";
         }
-        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x + 1] == 'W' && //z przodu po prawo ściana
-                 stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W')       //przed sobą nie mam ściany
+        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x + 1] == 'W' &&
+                 stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W')
         {
+
             return "move";
         }
-        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] == 'W') //przed sobą mam ścianę
+        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] == 'W')
         {
             bilans_rotacji[0]--;
+
             return "rotate_left";
         }
-        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W') //w razie czego idź do przodu jeśli nie ma tam ściany
+        else if (stan_mapy->mapa[stan_mapy->pozycja_y + 1][stan_mapy->pozycja_x] != 'W')
         {
+
             return "move";
         }
-        else //w razie czego skręć w lewo
+        else
         {
             bilans_rotacji[0]--;
+
             return "rotate_left";
         }
     }
@@ -221,65 +242,65 @@ char *co_zrobic(mapa *stan_mapy, int *bilans_rotacji, int x_pocz, int y_pocz)
     }
     return "wtf";
 }
-mapa *uzupelnij_zapisz_wypisz_macierz(wektor *wektor, mapa *mapa, char *url, char *chunk, Dane *dane, char *nazwa_folderu)
+mapa *uzupelnij_zapisz_wypisz_macierz(mapa *mapa, char *url, char *chunk, Dane *dane, char *nazwa_folderu)
 {
     chunk = make_request(url);
     dane = interpret_response(chunk, dane);
-    mapa = uzupelnij_macierz(mapa, dane, wektor);
-    zapisz_macierz(nazwa_folderu, mapa, wektor);
-    // wypisz(mapa);
+    mapa = uzupelnij_macierz(mapa, dane);
+    zapisz_macierz(nazwa_folderu, mapa);
+    wypisz(mapa);
     return mapa;
 }
-void wykonaj_ruch(char *odp, mapa *mapa, char *swiat, char *chunk, Dane *dane, char *nazwa_folderu, wektor *wektor, int *ile_ruchow)
+void co_zrobic(char *odp, mapa *mapa, char *swiat, char *chunk, Dane *dane, char *nazwa_folderu, int *ile_ruchow)
 {
     if (strcmp(odp, "rotate_left") == 0)
     {
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "left"), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "left"), chunk, dane, nazwa_folderu);
         ile_ruchow[0]++;
     }
     else if (strcmp(odp, "rotate_right") == 0)
     {
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
         ile_ruchow[0]++;
     }
     else if (strcmp(odp, "move") == 0)
     {
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, move(swiat), chunk, dane, nazwa_folderu);
         ile_ruchow[0]++;
     }
     else if (strcmp(odp, "explore") == 0)
     {
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
-        ile_ruchow[0]=ile_ruchow[0] + 3;
+        uzupelnij_zapisz_wypisz_macierz(mapa, explore(swiat), chunk, dane, nazwa_folderu);
+        ile_ruchow[0] + 3;
     }
     else if (strcmp(odp, "M_Rr_M") == 0)
     {
-        ile_ruchow[0]=ile_ruchow[0] + 6;
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, explore(swiat), chunk, dane, nazwa_folderu);
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, move(swiat), chunk, dane, nazwa_folderu);
+        ile_ruchow[0] + 6;
+        uzupelnij_zapisz_wypisz_macierz(mapa, move(swiat), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, explore(swiat), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
+        uzupelnij_zapisz_wypisz_macierz(mapa, move(swiat), chunk, dane, nazwa_folderu);
     }
     else if (strcmp(odp, "rotate_left_seek") == 0)
     {
         ile_ruchow[0]++;
-        uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "left"), chunk, dane, nazwa_folderu);
-        mapa = znajdz_sciane(wektor, mapa, chunk, dane, nazwa_folderu, swiat, ile_ruchow);
+        uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "left"), chunk, dane, nazwa_folderu);
+        mapa = znajdz_sciane(mapa, chunk, dane, nazwa_folderu, swiat, ile_ruchow);
     }
     else if (strcmp(odp, "wtf") == 0)
-        printf("MAMY PROBLEM!\n");
+        printf("MAMY PROBLEM(funckja wykonaj_ruch)!\n");
 }
-void odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_folderu, wektor *wektor)
+mapa *odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_folderu)
 {
     int *ile_ruchow = malloc(sizeof(int));
     ile_ruchow[0] = 0;
     int *bilans_rotacji = malloc(sizeof(int) * 2);
-    bilans_rotacji[0] = 1;
+    bilans_rotacji[0] = 0;
     int w = 0;
     for (w; w < 3; w++)
     {
-        ile_ruchow[0] = ile_ruchow[0] + 4;
-        mapa = obroc_explore(wektor, mapa, chunk, dane, nazwa_folderu, swiat);
+        ile_ruchow[0] + 4;
+        mapa = obroc_explore(mapa, chunk, dane, nazwa_folderu, swiat);
         if (strcmp(dane->field[1], "wall") == 0)
             break;
     }
@@ -287,22 +308,26 @@ void odkryj_mape(mapa *mapa, char *swiat, Dane *dane, char *chunk, char *nazwa_f
 
     if (w == 2)
     {
-        mapa = uzupelnij_zapisz_wypisz_macierz(wektor, mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
+        mapa = uzupelnij_zapisz_wypisz_macierz(mapa, rotate(swiat, "right"), chunk, dane, nazwa_folderu);
         ile_ruchow[0]++;
-        mapa = znajdz_sciane(wektor, mapa, chunk, dane, nazwa_folderu, swiat, ile_ruchow);
+        mapa = znajdz_sciane(mapa, chunk, dane, nazwa_folderu, swiat, ile_ruchow);
     }
+    printf("mapa pozycja y %d x %d\n", mapa->pozycja_y, mapa->pozycja_x);
     int x_pocz = mapa->pozycja_x;
-    int y_pocz = mapa->pozycja_y;
+    int y_pocz = (int)mapa->pozycja_y;
 
     for (int i = 0; i < 100; i++)
     {
-        wykonaj_ruch(co_zrobic(mapa, bilans_rotacji, x_pocz, y_pocz), mapa, swiat, chunk, dane, nazwa_folderu, wektor, ile_ruchow);
-        // printf("%s\n", wykonaj_ruch(mapa, bilans_rotacji,x_pocz,y_pocz));
+
+        char *co = wykonaj_ruch(mapa, bilans_rotacji, y_pocz, x_pocz);
+
+        co_zrobic(co, mapa, swiat, chunk, dane, nazwa_folderu, ile_ruchow);
+
         if (mapa->pozycja_y == y_pocz && mapa->pozycja_x == x_pocz && bilans_rotacji[0] == -4)
             break;
-        printf("i=====%d\n\n\n",i);
     }
     printf("wykonano w %d ruchach!", ile_ruchow[0]);
 
     wypisz(mapa);
+    return mapa;
 }

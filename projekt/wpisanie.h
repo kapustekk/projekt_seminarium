@@ -4,9 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <curl/curl.h>
-#include "../cJSON/cjson.h"
-
 
 typedef struct _Dane
 {
@@ -25,19 +22,22 @@ typedef struct _Mapa
     int pozycja_x;
     int pozycja_y;
     char kierunek;
+    int wektor_y;
+    int wektor_x;
 } mapa;
 
-typedef struct _WEKTOR
-{
-    int x;
-    int y;
-} wektor;
-
-mapa *doklejanie(mapa *wejscie, char kierunek, wektor *wektor);
-mapa *wpisywanie_do_mapy(mapa *wejscie, int y, int x, char pole, wektor *wektor);
-void pierwsze_wczytanie(int x_json, int y_json, int *x_wektor, int *y_wektor, int gdzie_zaczynamy);
-void zero(int x, int y, mapa *source);
-mapa *pamiec(int rozmiar_x, int rozmiar_y);
-void zwolnij_mape(mapa *co);
+#define N 5
+void alokuj_mape(mapa *m, int y, int x);
+void kopiuj_mape(mapa *m1, mapa *m, int wektor_x, int wektor_y);
+mapa *doklejanie_gora(mapa *m);
+mapa *doklejanie_dol(mapa *m);
+mapa *doklejanie_prawo(mapa *m);
+mapa *doklejanie_lewo(mapa *m);
+void wypisz(mapa *x);
+void zapisz(char *fnazwa, mapa *x);
+//void wczytaj(char *fnazwa, mapa *x);
+mapa *resetuj_mape(mapa *nowa);
+void zwolnij(mapa *x);
+mapa *wpisanie_do_mapy(mapa *gdzie, int y, int x, char co);
 
 #endif

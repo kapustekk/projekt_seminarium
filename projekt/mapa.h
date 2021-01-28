@@ -6,10 +6,17 @@
 #include "read_json.h"
 #include "wpisanie.h"
 
-mapa *wczytaj(char *nazwa, wektor *wektor);
+// typedef struct _Macierz {
+//     int r;
+//     int c;
+//     int **tab;
+// }Macierz;
+
+void wczytaj(char *nazwa, mapa *m);
 void wypisz(mapa *m);
 void zwolnij(mapa *m);
-void zapisz_macierz(char nazwa[], mapa *m, wektor *wektor);
-mapa *uzupelnij_macierz(mapa *m, Dane *dane, wektor *wektor);
+void zapisz_macierz(char nazwa[], mapa *m);
+mapa *uzupelnij_macierz(mapa *m, Dane *dane);
 mapa *wyczysc_macierz(mapa *m);
+char zwroc_litere(Dane *dane, int i);
 #endif

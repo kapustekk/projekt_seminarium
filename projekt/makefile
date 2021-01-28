@@ -1,11 +1,13 @@
 all:
-	cc main_curl.c mapa.c read_json.c url.c connect.c wpisanie_do_mapy.c logic.c -lcurl ../cJSON/cjson.o
+	cc main.c mapa.c read_json.c url.c connect.c odkrywanie_wnetrz.c wpisanie_do_mapy.c logic.c -lcurl ../cJSON/cjson.o -o czolg
 read:
 	cc tests/test-read-json.c read_json.c ../cJSON/cjson.o -o test-read
 url:
 	cc url.c tests/test-url.c -o test-url
 connect:
 	cc connect.c tests/test-connect.c -lcurl -o test-connect
+map:
+	gcc tests/wpisanie_test.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -o test-map -lcurl ../cJSON/cjson.o
 
 test-read: read
 	valgrind ./test-read
@@ -17,22 +19,21 @@ test-connect: connect
 	valgrind ./test-url
 	./test-connect
 
-test-wpisanie_do_mapy: test-wpisanie_do_mapy
-	gcc tests/wpisanie_test.c connect.c read_json.c wpisanie_do_mapy.c -o test-wpisanie_do_mapy -lcurl ../cJSON/cjson.o
-	valgrind ./test-wpisanie_do_mapy
-	./test-wpisanie_do_mapy 
-
-test-logic: test-logic
-	gcc tests/logic_test.c url.c logic.c mapa.c connect.c read_json.c wpisanie_do_mapy.c -o test-logic -lcurl ../cJSON/cjson.o
-	valgrind ./test-logic
-	./test-logic
-
-test-mapa: test-mapa
-	gcc tests/test_mapa.c mapa.c wpisanie_do_mapy.c -o test-mapa
+test-map: map
+	valgrind ./test-map
+	./test-map 
+test-wczytanie: 
+	gcc tests/test-mapa.c mapa.c wpisanie_do_mapy.c -o test-mapa
 	valgrind ./test-mapa
 	./test-mapa
+	
 
 clean:
 	rm -f do_mapy_test
 	rm -f *.o
+	rm -f test-read
+	rm -f test-url
+	rm -f test-connect
+	rm -f test-map
+	rm -f test-mapa
 
